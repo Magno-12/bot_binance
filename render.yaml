@@ -4,7 +4,7 @@ services:
     env: python
     plan: standard
     buildCommand: pip install -r requirements.txt
-    startCommand: python robust_main.py run --symbol ETHUSDT --interval 1h
+    startCommand: python main.py run --symbol ETHUSDT --interval 1h
     healthCheckPath: /health
     autoDeploy: false  # Desactivado para evitar despliegues no intencionados
     envVars:
