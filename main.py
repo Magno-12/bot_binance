@@ -13,6 +13,7 @@ from dotenv import load_dotenv
 from notification_system import NotificationSystem
 from data_persistence import DataPersistence
 from binance_bot import BinanceTradingBot
+from health_endpoint import HealthCheckServer
 
 # Configuración mejorada de logging
 def setup_logging():
@@ -44,6 +45,16 @@ class RobustTradingBot:
         self.consecutive_errors = 0
         self.max_consecutive_errors = 5
         self.error_cooldown = 60  # Segundos de espera tras error
+        
+        # Inicializar servidor de health check
+        render_port = int(os.environ.get('PORT', '8080'))
+        self.health_server = HealthCheckServer(port=render_port)
+        self.health_server.start()
+        self.health_server.update_bot_status({
+            'status': 'initializing',
+            'symbol': args.symbol,
+            'interval': args.interval
+        })
         
         # Inicializar componentes mejorados
         self.persistence = DataPersistence({
@@ -117,13 +128,24 @@ class RobustTradingBot:
         """Inicia el bot con manejo de errores y recuperación"""
         self.logger.info("Iniciando sistema robusto de trading...")
         
+        # Actualizar estado
+        self.health_server.update_bot_status({
+            'status': 'starting',
+            'last_trade_time': None,
+            'trades_today': 0
+        })
+        
         # Inicializar bot
         if not self.initialize_bot():
             self.logger.error("No se pudo inicializar el bot. Abortando.")
+            self.health_server.update_bot_status({'status': 'failed'})
             return False
         
         # Notificar inicio
         self.notifier.notify_restart("Inicio del sistema")
+        
+        # Actualizar estado
+        self.health_server.update_bot_status({'status': 'running'})
         
         # Registrar hora de inicio para estadísticas diarias
         last_daily_summary = datetime.now()
@@ -171,6 +193,7 @@ class RobustTradingBot:
         df = self.bot.get_historical_klines()
         if df is None or df.empty:
             self.logger.warning("No se pudieron obtener datos históricos")
+            self.health_server.update_bot_status({'status': 'warning', 'warning': 'No data available'})
             return
         
         # Calcular indicadores
@@ -179,17 +202,43 @@ class RobustTradingBot:
         # Verificar si hay posiciones abiertas
         self.bot.check_position_status()
         
+        # Actualizar estado
+        self.health_server.update_bot_status({
+            'is_in_position': self.bot.in_position,
+            'position_side': self.bot.position_side if self.bot.in_position else None,
+            'position_entry_price': self.bot.entry_price if self.bot.in_position else None,
+            'last_price': float(df['close'].iloc[-1]) if not df.empty else None
+        })
+        
         # Si no hay posición abierta, buscar señales de entrada
         if not self.bot.in_position:
-            buy_signal = self.bot.params['check_buy_signal'](df, -1)
-            sell_signal = self.bot.params['check_sell_signal'](df, -1)
+            # Verificar señales en los datos más recientes
+            buy_signal = SignalGenerator.check_buy_signal(df, -1)
+            sell_signal = SignalGenerator.check_sell_signal(df, -1)
             
             if buy_signal:
-                self.logger.info("Señal de compra detectada")
-                self.bot.place_buy_order()
+                self.logger.info("¡Señal de compra detectada!")
+                
+                # Calcular factor de riesgo dinámico basado en ATR
+                atr_value = df['atr'].iloc[-1]
+                current_price = df['close'].iloc[-1]
+                volatility = atr_value / current_price
+                
+                # Ajustar tamaño de posición inversamente proporcional a la volatilidad
+                risk_factor = min(1.0, 0.02 / volatility) if volatility > 0 else 1.0
+                
+                self.bot.place_buy_order(risk_factor)
+                
             elif sell_signal and self.bot.params.get('ENABLE_SHORT', False):
-                self.logger.info("Señal de venta en corto detectada")
-                self.bot.place_sell_short_order()
+                self.logger.info("¡Señal de venta en corto detectada!")
+                
+                # Gestión de riesgo dinámica similar
+                atr_value = df['atr'].iloc[-1]
+                current_price = df['close'].iloc[-1]
+                volatility = atr_value / current_price
+                risk_factor = min(1.0, 0.02 / volatility) if volatility > 0 else 1.0
+                
+                self.bot.place_sell_short_order(risk_factor)
     
     def _save_bot_state(self):
         """Guarda el estado actual del bot"""
@@ -272,6 +321,13 @@ class RobustTradingBot:
         """Maneja errores durante la ejecución del bot"""
         self.consecutive_errors += 1
         
+        # Actualizar estado
+        self.health_server.update_bot_status({
+            'status': 'error',
+            'last_error': str(error),
+            'error_count': self.consecutive_errors
+        })
+        
         # Registrar error
         error_msg = str(error)
         error_traceback = traceback.format_exc()
@@ -328,6 +384,9 @@ class RobustTradingBot:
     def _cleanup(self):
         """Realiza limpieza al finalizar la ejecución"""
         try:
+            # Actualizar estado
+            self.health_server.update_bot_status({'status': 'stopping'})
+            
             # Guardar estado final
             self._save_bot_state()
             
@@ -346,10 +405,19 @@ class RobustTradingBot:
             # Notificar apagado
             self.notifier.notify_error("Bot detenido", "El sistema ha sido detenido correctamente.")
             
+            # Detener servidor de health check
+            self.health_server.stop()
+            
             self.logger.info("Limpieza finalizada correctamente")
             
         except Exception as e:
             self.logger.error(f"Error durante la limpieza final: {e}")
+            
+            # Intentar detener health server aunque haya error
+            try:
+                self.health_server.stop()
+            except:
+                pass
 
 
 def parse_args():
