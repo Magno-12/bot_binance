@@ -1,0 +1,179 @@
+2025-02-28 13:14:07,833 - main - INFO - Iniciando bot para ETHUSDT en intervalo 1h
+2025-02-28 13:14:08,769 - binance_bot - INFO - Bot configurado en modo TEST (testnet)
+2025-02-28 13:14:08,770 - binance_bot - INFO - Bot inicializado para ETHUSDT en intervalo 1h
+2025-02-28 13:14:08,770 - binance_bot - INFO - Iniciando estrategia de trading...
+2025-02-28 13:14:10,013 - binance_bot - ERROR - Error al obtener datos históricos: 200 candles ago UTC
+2025-02-28 13:14:10,013 - binance_bot - WARNING - No se pudieron obtener datos históricos, reintentando...
+2025-02-28 13:15:10,034 - binance_bot - ERROR - Error al obtener datos históricos: 200 candles ago UTC
+2025-02-28 13:15:10,036 - binance_bot - WARNING - No se pudieron obtener datos históricos, reintentando...
+2025-02-28 13:16:10,071 - binance_bot - ERROR - Error al obtener datos históricos: 200 candles ago UTC
+2025-02-28 13:16:10,071 - binance_bot - WARNING - No se pudieron obtener datos históricos, reintentando...
+2025-02-28 13:17:10,115 - binance_bot - ERROR - Error al obtener datos históricos: 200 candles ago UTC
+2025-02-28 13:17:10,116 - binance_bot - WARNING - No se pudieron obtener datos históricos, reintentando...
+2025-02-28 13:18:10,139 - binance_bot - ERROR - Error al obtener datos históricos: 200 candles ago UTC
+2025-02-28 13:18:10,139 - binance_bot - WARNING - No se pudieron obtener datos históricos, reintentando...
+2025-02-28 13:18:12,710 - main - INFO - Bot detenido manualmente
+2025-02-28 13:18:12,711 - main - INFO - Bot finalizado correctamente
+2025-02-28 13:23:46,815 - main - INFO - Iniciando bot para ETHUSDT en intervalo 1h
+2025-02-28 13:23:47,270 - binance_bot - INFO - Bot configurado en modo TEST (testnet)
+2025-02-28 13:23:47,271 - binance_bot - INFO - Bot inicializado para ETHUSDT en intervalo 1h
+2025-02-28 13:23:47,271 - binance_bot - INFO - Iniciando estrategia de trading...
+2025-02-28 13:23:48,534 - binance_bot - ERROR - Error al obtener datos históricos: 200 candles ago UTC
+2025-02-28 13:23:48,535 - binance_bot - WARNING - No se pudieron obtener datos históricos, reintentando...
+2025-02-28 13:24:00,119 - main - INFO - Bot detenido manualmente
+2025-02-28 13:24:00,119 - main - INFO - Bot finalizado correctamente
+2025-02-28 13:24:04,230 - main - INFO - Iniciando bot para ETHUSDT en intervalo 1h
+2025-02-28 13:24:04,970 - binance_bot - INFO - Bot configurado en modo TEST (testnet)
+2025-02-28 13:24:04,970 - binance_bot - INFO - Bot inicializado para ETHUSDT en intervalo 1h
+2025-02-28 13:24:04,970 - binance_bot - INFO - Iniciando estrategia de trading...
+2025-02-28 13:24:06,246 - binance_bot - ERROR - Error al obtener datos históricos: 200 candles ago UTC
+2025-02-28 13:24:06,247 - binance_bot - WARNING - No se pudieron obtener datos históricos, reintentando...
+2025-02-28 13:25:06,272 - binance_bot - ERROR - Error al obtener datos históricos: 200 candles ago UTC
+2025-02-28 13:25:06,272 - binance_bot - WARNING - No se pudieron obtener datos históricos, reintentando...
+2025-02-28 13:25:26,284 - main - INFO - Bot detenido manualmente
+2025-02-28 13:25:26,284 - main - INFO - Bot finalizado correctamente
+2025-02-28 13:26:07,143 - main - INFO - Iniciando bot para ETHUSDT en intervalo 1h
+2025-02-28 13:26:07,973 - binance_bot - INFO - Bot configurado en modo TEST (testnet)
+2025-02-28 13:26:07,974 - binance_bot - INFO - Bot inicializado para ETHUSDT en intervalo 1h
+2025-02-28 13:26:07,974 - binance_bot - INFO - Iniciando estrategia de trading...
+2025-02-28 13:26:10,025 - binance_bot - ERROR - Error al verificar órdenes abiertas: APIError(code=-2014): API-key format invalid.
+2025-02-28 13:26:10,688 - binance_bot - INFO - Precio actual: 2193.57, En posición: False, Tipo: None
+2025-02-28 13:26:42,735 - binance_bot - ERROR - Error al verificar órdenes abiertas: APIError(code=-2014): API-key format invalid.
+2025-02-28 13:26:43,392 - binance_bot - INFO - Precio actual: 2195.61, En posición: False, Tipo: None
+2025-02-28 13:26:49,704 - main - INFO - Bot detenido manualmente
+2025-02-28 13:26:49,705 - main - INFO - Bot finalizado correctamente
+2025-02-28 13:28:10,332 - main - INFO - Iniciando bot para ETHUSDT en intervalo 1h
+2025-02-28 13:28:11,128 - binance_bot - INFO - Bot configurado en modo TEST (testnet)
+2025-02-28 13:28:11,129 - binance_bot - INFO - Bot inicializado para ETHUSDT en intervalo 1h
+2025-02-28 13:28:11,129 - binance_bot - INFO - Iniciando estrategia de trading...
+2025-02-28 13:28:12,755 - binance_bot - ERROR - Error al verificar órdenes abiertas: APIError(code=-2014): API-key format invalid.
+2025-02-28 13:28:12,993 - binance_bot - INFO - Precio actual: 2201.82, En posición: False, Tipo: None
+2025-02-28 13:28:46,497 - binance_bot - ERROR - Error al verificar órdenes abiertas: APIError(code=-2014): API-key format invalid.
+2025-02-28 13:28:46,749 - binance_bot - INFO - Precio actual: 2203.6, En posición: False, Tipo: None
+2025-02-28 13:29:11,592 - main - INFO - Bot detenido manualmente
+2025-02-28 13:29:11,592 - main - INFO - Bot finalizado correctamente
+2025-02-28 13:29:15,119 - main - INFO - Iniciando bot para ETHUSDT en intervalo 1h
+2025-02-28 13:29:16,044 - binance_bot - INFO - Bot configurado en modo TEST (testnet)
+2025-02-28 13:29:16,044 - binance_bot - INFO - Bot inicializado para ETHUSDT en intervalo 1h
+2025-02-28 13:29:16,045 - binance_bot - INFO - Iniciando estrategia de trading...
+2025-02-28 13:29:18,030 - binance_bot - ERROR - Error al verificar órdenes abiertas: APIError(code=-2014): API-key format invalid.
+2025-02-28 13:29:18,696 - binance_bot - INFO - Precio actual: 2204.29, En posición: False, Tipo: None
+2025-02-28 13:29:50,725 - binance_bot - ERROR - Error al verificar órdenes abiertas: APIError(code=-2014): API-key format invalid.
+2025-02-28 13:29:51,372 - binance_bot - INFO - Precio actual: 2207.0, En posición: False, Tipo: None
+2025-02-28 13:30:22,962 - binance_bot - ERROR - Error al verificar órdenes abiertas: APIError(code=-2014): API-key format invalid.
+2025-02-28 13:30:23,621 - binance_bot - INFO - Precio actual: 2208.15, En posición: False, Tipo: None
+2025-02-28 13:30:55,643 - binance_bot - ERROR - Error al verificar órdenes abiertas: APIError(code=-2014): API-key format invalid.
+2025-02-28 13:30:56,304 - binance_bot - INFO - Precio actual: 2211.39, En posición: False, Tipo: None
+2025-02-28 13:31:28,577 - binance_bot - ERROR - Error al verificar órdenes abiertas: APIError(code=-2014): API-key format invalid.
+2025-02-28 13:31:29,280 - binance_bot - INFO - Precio actual: 2210.2, En posición: False, Tipo: None
+2025-02-28 13:31:30,418 - main - INFO - Bot detenido manualmente
+2025-02-28 13:31:30,418 - main - INFO - Bot finalizado correctamente
+2025-02-28 13:31:36,225 - main - INFO - Iniciando bot para ETHUSDT en intervalo 1h
+2025-02-28 13:31:36,938 - binance_bot - INFO - Bot configurado en modo TEST (testnet)
+2025-02-28 13:31:36,938 - binance_bot - INFO - Bot inicializado para ETHUSDT en intervalo 1h
+2025-02-28 13:31:36,938 - binance_bot - INFO - Iniciando estrategia de trading...
+2025-02-28 13:31:38,543 - binance_bot - ERROR - Error al verificar órdenes abiertas: APIError(code=-2014): API-key format invalid.
+2025-02-28 13:31:39,214 - binance_bot - INFO - Precio actual: 2213.51, En posición: False, Tipo: None
+2025-02-28 13:31:40,856 - main - INFO - Bot detenido manualmente
+2025-02-28 13:31:40,857 - main - INFO - Bot finalizado correctamente
+2025-02-28 13:32:19,879 - main - INFO - Iniciando bot para ETHUSDT en intervalo 1h
+2025-02-28 13:32:20,170 - binance_bot - INFO - Bot configurado en modo TEST (testnet)
+2025-02-28 13:32:20,171 - binance_bot - INFO - Bot inicializado para ETHUSDT en intervalo 1h
+2025-02-28 13:32:20,171 - binance_bot - INFO - Iniciando estrategia de trading...
+2025-02-28 13:32:21,795 - binance_bot - ERROR - Error al verificar órdenes abiertas: APIError(code=-2014): API-key format invalid.
+2025-02-28 13:32:22,040 - binance_bot - INFO - Precio actual: 2216.73, En posición: False, Tipo: None
+2025-02-28 13:32:39,201 - main - INFO - Bot detenido manualmente
+2025-02-28 13:32:39,202 - main - INFO - Bot finalizado correctamente
+2025-02-28 13:33:05,803 - main - INFO - Iniciando bot para ETHUSDT en intervalo 1h
+2025-02-28 13:33:06,149 - binance_bot - INFO - Bot configurado en modo TEST (testnet)
+2025-02-28 13:33:06,149 - binance_bot - INFO - Bot inicializado para ETHUSDT en intervalo 1h
+2025-02-28 13:33:06,149 - binance_bot - INFO - Iniciando estrategia de trading...
+2025-02-28 13:33:07,844 - binance_bot - ERROR - Error al verificar órdenes abiertas: APIError(code=-2014): API-key format invalid.
+2025-02-28 13:33:08,078 - binance_bot - INFO - Precio actual: 2213.84, En posición: False, Tipo: None
+2025-02-28 13:33:40,062 - binance_bot - ERROR - Error al verificar órdenes abiertas: APIError(code=-2014): API-key format invalid.
+2025-02-28 13:33:40,322 - binance_bot - INFO - Precio actual: 2213.51, En posición: False, Tipo: None
+2025-02-28 13:34:12,335 - binance_bot - ERROR - Error al verificar órdenes abiertas: APIError(code=-2014): API-key format invalid.
+2025-02-28 13:34:13,010 - binance_bot - INFO - Precio actual: 2215.45, En posición: False, Tipo: None
+2025-02-28 13:34:45,234 - binance_bot - ERROR - Error al verificar órdenes abiertas: APIError(code=-2014): API-key format invalid.
+2025-02-28 13:34:45,470 - binance_bot - INFO - Precio actual: 2215.67, En posición: False, Tipo: None
+2025-02-28 13:35:17,444 - binance_bot - ERROR - Error al verificar órdenes abiertas: APIError(code=-2014): API-key format invalid.
+2025-02-28 13:35:18,092 - binance_bot - INFO - Precio actual: 2215.84, En posición: False, Tipo: None
+2025-02-28 13:35:50,479 - binance_bot - ERROR - Error al verificar órdenes abiertas: APIError(code=-2014): API-key format invalid.
+2025-02-28 13:35:50,719 - binance_bot - INFO - Precio actual: 2219.5, En posición: False, Tipo: None
+2025-02-28 13:36:22,769 - binance_bot - ERROR - Error al verificar órdenes abiertas: APIError(code=-2014): API-key format invalid.
+2025-02-28 13:36:23,449 - binance_bot - INFO - Precio actual: 2222.66, En posición: False, Tipo: None
+2025-02-28 13:36:55,513 - binance_bot - ERROR - Error al verificar órdenes abiertas: APIError(code=-2014): API-key format invalid.
+2025-02-28 13:36:56,171 - binance_bot - INFO - Precio actual: 2226.33, En posición: False, Tipo: None
+2025-02-28 13:37:28,734 - binance_bot - ERROR - Error al verificar órdenes abiertas: APIError(code=-2014): API-key format invalid.
+2025-02-28 13:37:29,402 - binance_bot - INFO - Precio actual: 2229.89, En posición: False, Tipo: None
+2025-02-28 13:37:58,613 - main - INFO - Bot detenido manualmente
+2025-02-28 13:37:58,613 - main - INFO - Bot finalizado correctamente
+2025-03-10 17:32:05,505 - main - INFO - Iniciando bot para ETHUSDT en intervalo 1h
+2025-03-10 17:32:06,231 - binance_bot - INFO - Bot configurado en modo TEST (testnet)
+2025-03-10 17:32:06,231 - binance_bot - INFO - Bot inicializado para ETHUSDT en intervalo 1h
+2025-03-10 17:32:06,232 - binance_bot - INFO - Iniciando estrategia de trading...
+2025-03-10 17:32:07,897 - binance_bot - ERROR - Error al verificar órdenes abiertas: APIError(code=-2015): Invalid API-key, IP, or permissions for action.
+2025-03-10 17:32:08,138 - binance_bot - INFO - Precio actual: 1870.46, En posición: False, Tipo: None
+2025-03-10 17:32:39,315 - binance_bot - ERROR - Error al verificar órdenes abiertas: APIError(code=-2015): Invalid API-key, IP, or permissions for action.
+2025-03-10 17:32:39,983 - binance_bot - INFO - Precio actual: 1873.34, En posición: False, Tipo: None
+2025-03-10 17:33:11,579 - binance_bot - ERROR - Error al verificar órdenes abiertas: APIError(code=-2015): Invalid API-key, IP, or permissions for action.
+2025-03-10 17:33:12,252 - binance_bot - INFO - Precio actual: 1870.8, En posición: False, Tipo: None
+2025-03-10 17:33:44,303 - binance_bot - ERROR - Error al verificar órdenes abiertas: APIError(code=-2015): Invalid API-key, IP, or permissions for action.
+2025-03-10 17:33:44,540 - binance_bot - INFO - Precio actual: 1869.92, En posición: False, Tipo: None
+2025-03-10 17:34:16,558 - binance_bot - ERROR - Error al verificar órdenes abiertas: APIError(code=-2015): Invalid API-key, IP, or permissions for action.
+2025-03-10 17:34:17,229 - binance_bot - INFO - Precio actual: 1867.88, En posición: False, Tipo: None
+2025-03-10 17:34:49,280 - binance_bot - ERROR - Error al verificar órdenes abiertas: APIError(code=-2015): Invalid API-key, IP, or permissions for action.
+2025-03-10 17:34:49,525 - binance_bot - INFO - Precio actual: 1868.32, En posición: False, Tipo: None
+2025-03-10 17:35:21,590 - binance_bot - ERROR - Error al verificar órdenes abiertas: APIError(code=-2015): Invalid API-key, IP, or permissions for action.
+2025-03-10 17:35:21,835 - binance_bot - INFO - Precio actual: 1868.45, En posición: False, Tipo: None
+2025-03-10 17:35:53,887 - binance_bot - ERROR - Error al verificar órdenes abiertas: APIError(code=-2015): Invalid API-key, IP, or permissions for action.
+2025-03-10 17:35:54,128 - binance_bot - INFO - Precio actual: 1869.34, En posición: False, Tipo: None
+2025-03-10 17:35:56,667 - main - INFO - Bot detenido manualmente
+2025-03-10 17:35:56,667 - main - INFO - Bot finalizado correctamente
+2025-03-10 20:34:53,986 - main - INFO - Iniciando bot para ETHUSDT en intervalo 1h
+2025-03-10 20:34:54,827 - binance_bot - INFO - Bot configurado en modo TEST (testnet)
+2025-03-10 20:34:54,828 - binance_bot - INFO - Bot inicializado para ETHUSDT en intervalo 1h
+2025-03-10 20:34:54,828 - binance_bot - INFO - Iniciando estrategia de trading...
+2025-03-10 20:34:56,397 - binance_bot - ERROR - Error al verificar órdenes abiertas: APIError(code=-2015): Invalid API-key, IP, or permissions for action.
+2025-03-10 20:34:57,412 - binance_bot - INFO - Precio actual: 1818.81, En posición: False, Tipo: None
+2025-03-10 20:35:29,539 - binance_bot - ERROR - Error al verificar órdenes abiertas: APIError(code=-2015): Invalid API-key, IP, or permissions for action.
+2025-03-10 20:35:30,197 - binance_bot - INFO - Precio actual: 1818.47, En posición: False, Tipo: None
+2025-03-10 20:36:02,172 - binance_bot - ERROR - Error al verificar órdenes abiertas: APIError(code=-2015): Invalid API-key, IP, or permissions for action.
+2025-03-10 20:36:03,002 - binance_bot - INFO - Precio actual: 1826.29, En posición: False, Tipo: None
+2025-03-10 20:36:35,681 - binance_bot - ERROR - Error al verificar órdenes abiertas: APIError(code=-2015): Invalid API-key, IP, or permissions for action.
+2025-03-10 20:36:36,414 - binance_bot - INFO - Precio actual: 1823.8, En posición: False, Tipo: None
+2025-03-10 20:37:09,045 - binance_bot - ERROR - Error al verificar órdenes abiertas: APIError(code=-2015): Invalid API-key, IP, or permissions for action.
+2025-03-10 20:37:09,885 - binance_bot - INFO - Precio actual: 1830.04, En posición: False, Tipo: None
+2025-03-10 20:37:42,543 - binance_bot - ERROR - Error al verificar órdenes abiertas: APIError(code=-2015): Invalid API-key, IP, or permissions for action.
+2025-03-10 20:37:43,206 - binance_bot - INFO - Precio actual: 1834.06, En posición: False, Tipo: None
+2025-03-10 20:38:15,852 - binance_bot - ERROR - Error al verificar órdenes abiertas: APIError(code=-2015): Invalid API-key, IP, or permissions for action.
+2025-03-10 20:38:16,657 - binance_bot - INFO - Precio actual: 1834.56, En posición: False, Tipo: None
+2025-03-10 20:38:49,045 - binance_bot - ERROR - Error al verificar órdenes abiertas: APIError(code=-2015): Invalid API-key, IP, or permissions for action.
+2025-03-10 20:38:49,325 - binance_bot - INFO - Precio actual: 1832.82, En posición: False, Tipo: None
+2025-03-10 20:39:20,712 - binance_bot - ERROR - Error al verificar órdenes abiertas: APIError(code=-2015): Invalid API-key, IP, or permissions for action.
+2025-03-10 20:39:21,031 - binance_bot - INFO - Precio actual: 1829.42, En posición: False, Tipo: None
+2025-03-10 20:39:54,007 - binance_bot - ERROR - Error al verificar órdenes abiertas: APIError(code=-2015): Invalid API-key, IP, or permissions for action.
+2025-03-10 20:39:54,453 - binance_bot - INFO - Precio actual: 1829.68, En posición: False, Tipo: None
+2025-03-10 20:40:26,489 - binance_bot - ERROR - Error al verificar órdenes abiertas: APIError(code=-2015): Invalid API-key, IP, or permissions for action.
+2025-03-10 20:40:27,212 - binance_bot - INFO - Precio actual: 1833.49, En posición: False, Tipo: None
+2025-03-10 20:40:44,652 - main - INFO - Bot detenido manualmente
+2025-03-10 20:40:44,652 - main - INFO - Bot finalizado correctamente
+2025-03-10 20:40:50,072 - main - INFO - Iniciando bot para ETHUSDT en intervalo 1h
+2025-03-10 20:40:50,378 - binance_bot - INFO - Bot configurado en modo PRODUCCIÓN
+2025-03-10 20:40:50,378 - binance_bot - INFO - Bot inicializado para ETHUSDT en intervalo 1h
+2025-03-10 20:40:50,378 - binance_bot - INFO - Iniciando estrategia de trading...
+2025-03-10 20:40:51,417 - binance_bot - INFO - Precio actual: 1828.97, En posición: False, Tipo: None
+2025-03-10 20:41:23,101 - binance_bot - INFO - Precio actual: 1835.35, En posición: False, Tipo: None
+2025-03-10 20:41:54,550 - binance_bot - INFO - Precio actual: 1833.05, En posición: False, Tipo: None
+2025-03-10 20:42:25,773 - binance_bot - INFO - Precio actual: 1837.02, En posición: False, Tipo: None
+2025-03-10 20:42:56,803 - binance_bot - INFO - Precio actual: 1837.17, En posición: False, Tipo: None
+2025-03-10 20:43:28,174 - binance_bot - INFO - Precio actual: 1839.47, En posición: False, Tipo: None
+2025-03-10 20:43:59,517 - binance_bot - INFO - Precio actual: 1841.02, En posición: False, Tipo: None
+2025-03-10 20:44:30,526 - binance_bot - INFO - Precio actual: 1836.84, En posición: False, Tipo: None
+2025-03-10 20:45:01,930 - binance_bot - INFO - Precio actual: 1842.3, En posición: False, Tipo: None
+2025-03-10 20:45:33,027 - binance_bot - INFO - Precio actual: 1839.79, En posición: False, Tipo: None
+2025-03-10 20:46:04,257 - binance_bot - INFO - Precio actual: 1834.17, En posición: False, Tipo: None
+2025-03-10 20:46:35,627 - binance_bot - INFO - Precio actual: 1838.01, En posición: False, Tipo: None
+2025-03-10 20:47:07,501 - binance_bot - INFO - Precio actual: 1843.09, En posición: False, Tipo: None
+2025-03-10 20:47:23,764 - main - INFO - Bot detenido manualmente
+2025-03-10 20:47:23,764 - main - INFO - Bot finalizado correctamente
