@@ -177,3 +177,502 @@
 2025-03-10 20:47:07,501 - binance_bot - INFO - Precio actual: 1843.09, En posición: False, Tipo: None
 2025-03-10 20:47:23,764 - main - INFO - Bot detenido manualmente
 2025-03-10 20:47:23,764 - main - INFO - Bot finalizado correctamente
+2025-03-28 13:39:49,318 - health_endpoint - INFO - Iniciando servidor de health check en puerto 8080
+2025-03-28 13:39:49,418 - health_endpoint - INFO - Servidor de health check iniciado correctamente
+2025-03-28 13:39:49,419 - data_persistence - INFO - Sistema de persistencia de datos inicializado. Dir datos: data, Dir backups: backups
+2025-03-28 13:39:49,420 - notification_system - WARNING - Configuración de correo electrónico incompleta. Las notificaciones no funcionarán.
+2025-03-28 13:39:49,421 - robust_main - INFO - Sistema robusto inicializado
+2025-03-28 13:39:49,421 - robust_main - INFO - Iniciando sistema robusto de trading...
+2025-03-28 13:39:49,421 - data_persistence - WARNING - Archivo data\futures_bot_params.json no encontrado
+2025-03-28 13:39:49,658 - binance_futures_bot - INFO - Bot de futuros configurado en modo PRODUCCIÓN
+2025-03-28 13:39:50,176 - binance_futures_bot - INFO - Apalancamiento configurado: 3x
+2025-03-28 13:39:50,407 - binance_futures_bot - ERROR - Error al configurar cuenta de futuros: APIError(code=-4046): No need to change margin type.
+2025-03-28 13:39:50,408 - binance_futures_bot - INFO - La cuenta ya está en margen ISOLATED
+2025-03-28 13:39:50,409 - binance_futures_bot - INFO - Bot de futuros inicializado para ETHUSDT en intervalo 1h
+2025-03-28 13:39:50,409 - robust_main - INFO - Bot de FUTUROS inicializado para ETHUSDT en intervalo 1h
+2025-03-28 13:39:50,410 - robust_main - INFO - Configuración: Apalancamiento 3x, Hedge Mode: False
+2025-03-28 13:39:50,640 - robust_main - INFO - Estado del sistema Binance: {'status': 0, 'msg': 'normal'}
+2025-03-28 13:41:17,965 - robust_main - INFO - Recibida señal de apagado (2)
+2025-03-28 13:41:19,353 - robust_main - INFO - Recibida señal de apagado (2)
+2025-03-28 13:41:19,710 - robust_main - INFO - Recibida señal de apagado (2)
+2025-03-28 13:41:19,927 - robust_main - INFO - Recibida señal de apagado (2)
+2025-03-28 13:41:20,241 - robust_main - INFO - Recibida señal de apagado (2)
+2025-03-28 13:41:22,458 - data_persistence - INFO - Hilo de backup automático detenido
+2025-03-28 13:41:22,458 - health_endpoint - INFO - Deteniendo servidor de health check...
+2025-03-28 13:41:22,702 - health_endpoint - INFO - Servidor de health check detenido
+2025-03-28 13:41:22,703 - robust_main - INFO - Limpieza finalizada correctamente
+2025-03-28 13:41:22,703 - robust_main - INFO - Sistema detenido correctamente
+2025-03-28 14:48:41,879 - health_endpoint - INFO - Iniciando servidor de health check en puerto 8080
+2025-03-28 14:48:41,984 - health_endpoint - INFO - Servidor de health check iniciado correctamente
+2025-03-28 14:48:41,985 - data_persistence - INFO - Sistema de persistencia de datos inicializado. Dir datos: data, Dir backups: backups
+2025-03-28 14:48:41,985 - notification_system - WARNING - Configuración de correo electrónico incompleta. Las notificaciones no funcionarán.
+2025-03-28 14:48:41,985 - robust_main - INFO - Sistema robusto inicializado
+2025-03-28 14:48:41,985 - robust_main - INFO - Iniciando sistema robusto de trading...
+2025-03-28 14:48:42,012 - robust_main - INFO - Parámetros cargados desde archivo persistente
+2025-03-28 14:48:42,675 - binance_futures_bot - INFO - Bot de futuros configurado en modo PRODUCCIÓN
+2025-03-28 14:48:44,053 - binance_futures_bot - INFO - Apalancamiento configurado: 3x
+2025-03-28 14:48:44,308 - binance_futures_bot - ERROR - Error al configurar cuenta de futuros: APIError(code=-4046): No need to change margin type.
+2025-03-28 14:48:44,308 - binance_futures_bot - INFO - La cuenta ya está en margen ISOLATED
+2025-03-28 14:48:44,313 - binance_futures_bot - INFO - Bot de futuros inicializado para ETHUSDT en intervalo 1h
+2025-03-28 14:48:44,313 - robust_main - INFO - Bot de FUTUROS inicializado para ETHUSDT en intervalo 1h
+2025-03-28 14:48:44,313 - robust_main - INFO - Configuración: Apalancamiento 3x, Hedge Mode: False
+2025-03-28 14:48:44,737 - robust_main - INFO - Estado del sistema Binance: {'status': 0, 'msg': 'normal'}
+2025-03-28 14:52:03,373 - robust_main - INFO - Recibida señal de apagado (2)
+2025-03-28 14:52:04,076 - robust_main - INFO - Recibida señal de apagado (2)
+2025-03-28 14:52:04,247 - robust_main - INFO - Recibida señal de apagado (2)
+2025-03-28 14:52:04,407 - robust_main - INFO - Recibida señal de apagado (2)
+2025-03-28 14:52:04,564 - robust_main - INFO - Recibida señal de apagado (2)
+2025-03-28 14:52:21,103 - data_persistence - INFO - Hilo de backup automático detenido
+2025-03-28 14:52:21,104 - health_endpoint - INFO - Deteniendo servidor de health check...
+2025-03-28 14:52:21,429 - health_endpoint - INFO - Servidor de health check detenido
+2025-03-28 14:52:21,429 - robust_main - INFO - Limpieza finalizada correctamente
+2025-03-28 14:52:21,431 - robust_main - INFO - Sistema detenido correctamente
+2025-03-28 15:01:03,988 - health_endpoint - INFO - Iniciando servidor de health check en puerto 8080
+2025-03-28 15:01:04,095 - health_endpoint - INFO - Servidor de health check iniciado correctamente
+2025-03-28 15:01:04,096 - data_persistence - INFO - Sistema de persistencia de datos inicializado. Dir datos: data, Dir backups: backups
+2025-03-28 15:01:04,096 - notification_system - WARNING - Configuración de correo electrónico incompleta. Las notificaciones no funcionarán.
+2025-03-28 15:01:04,096 - robust_main - INFO - Sistema robusto inicializado
+2025-03-28 15:01:04,096 - robust_main - INFO - Iniciando sistema robusto de trading...
+2025-03-28 15:01:04,105 - robust_main - INFO - Parámetros cargados desde archivo persistente
+2025-03-28 15:01:04,773 - binance_futures_bot - INFO - Bot de futuros configurado en modo PRODUCCIÓN
+2025-03-28 15:01:05,844 - binance_futures_bot - INFO - Apalancamiento configurado: 3x
+2025-03-28 15:01:06,103 - binance_futures_bot - ERROR - Error al configurar cuenta de futuros: APIError(code=-4046): No need to change margin type.
+2025-03-28 15:01:06,111 - binance_futures_bot - INFO - La cuenta ya está en margen ISOLATED
+2025-03-28 15:01:06,111 - binance_futures_bot - INFO - Bot de futuros inicializado para ETHUSDT en intervalo 1h
+2025-03-28 15:01:06,111 - robust_main - INFO - Bot de FUTUROS inicializado para ETHUSDT en intervalo 1h
+2025-03-28 15:01:06,111 - robust_main - INFO - Configuración: Apalancamiento 3x, Hedge Mode: False
+2025-03-28 15:01:06,406 - robust_main - INFO - Estado del sistema Binance: {'status': 0, 'msg': 'normal'}
+2025-03-28 15:02:14,933 - robust_main - INFO - Recibida señal de apagado (2)
+2025-03-28 15:02:16,476 - robust_main - INFO - Recibida señal de apagado (2)
+2025-03-28 15:02:16,649 - robust_main - INFO - Recibida señal de apagado (2)
+2025-03-28 15:02:16,813 - robust_main - INFO - Recibida señal de apagado (2)
+2025-03-28 15:02:16,990 - robust_main - INFO - Recibida señal de apagado (2)
+2025-03-28 15:02:39,147 - data_persistence - INFO - Hilo de backup automático detenido
+2025-03-28 15:02:39,147 - health_endpoint - INFO - Deteniendo servidor de health check...
+2025-03-28 15:02:39,462 - health_endpoint - INFO - Servidor de health check detenido
+2025-03-28 15:02:39,462 - robust_main - INFO - Limpieza finalizada correctamente
+2025-03-28 15:02:39,462 - robust_main - INFO - Sistema detenido correctamente
+2025-03-29 10:58:44,001 - health_endpoint - INFO - Iniciando servidor de health check en puerto 8080
+2025-03-29 10:58:44,103 - health_endpoint - INFO - Servidor de health check iniciado correctamente
+2025-03-29 10:58:44,105 - data_persistence - INFO - Sistema de persistencia de datos inicializado. Dir datos: data, Dir backups: backups
+2025-03-29 10:58:44,105 - notification_system - WARNING - Configuración de correo electrónico incompleta. Las notificaciones no funcionarán.
+2025-03-29 10:58:44,106 - robust_main - INFO - Sistema robusto inicializado
+2025-03-29 10:58:44,106 - robust_main - INFO - Iniciando sistema robusto de trading...
+2025-03-29 10:58:44,120 - robust_main - INFO - Parámetros cargados desde archivo persistente
+2025-03-29 10:58:44,361 - binance_futures_bot - INFO - Bot de futuros configurado en modo PRODUCCIÓN
+2025-03-29 10:58:44,842 - binance_futures_bot - INFO - Apalancamiento configurado: 3x
+2025-03-29 10:58:45,069 - binance_futures_bot - ERROR - Error al configurar cuenta de futuros: APIError(code=-4046): No need to change margin type.
+2025-03-29 10:58:45,070 - binance_futures_bot - INFO - La cuenta ya está en margen ISOLATED
+2025-03-29 10:58:45,071 - binance_futures_bot - INFO - Bot de futuros inicializado para ETHUSDT en intervalo 5m
+2025-03-29 10:58:45,071 - robust_main - INFO - Bot de FUTUROS inicializado para ETHUSDT en intervalo 5m
+2025-03-29 10:58:45,072 - robust_main - INFO - Configuración: Apalancamiento 3x, Hedge Mode: False
+2025-03-29 10:58:45,294 - robust_main - INFO - Estado del sistema Binance: {'status': 0, 'msg': 'normal'}
+2025-03-29 11:03:24,634 - robust_main - INFO - Recibida señal de apagado (2)
+2025-03-29 11:03:25,238 - robust_main - INFO - Recibida señal de apagado (2)
+2025-03-29 11:03:25,383 - robust_main - INFO - Recibida señal de apagado (2)
+2025-03-29 11:03:25,559 - robust_main - INFO - Recibida señal de apagado (2)
+2025-03-29 11:03:25,723 - robust_main - INFO - Recibida señal de apagado (2)
+2025-03-29 11:03:26,969 - robust_main - INFO - Recibida señal de apagado (2)
+2025-03-29 11:03:50,555 - data_persistence - INFO - Hilo de backup automático detenido
+2025-03-29 11:03:50,562 - health_endpoint - INFO - Deteniendo servidor de health check...
+2025-03-29 11:03:50,965 - health_endpoint - INFO - Servidor de health check detenido
+2025-03-29 11:03:50,965 - robust_main - INFO - Limpieza finalizada correctamente
+2025-03-29 11:03:50,966 - robust_main - INFO - Sistema detenido correctamente
+2025-03-29 11:17:20,866 - health_endpoint - INFO - Iniciando servidor de health check en puerto 8080
+2025-03-29 11:17:20,967 - health_endpoint - INFO - Servidor de health check iniciado correctamente
+2025-03-29 11:17:20,971 - data_persistence - INFO - Sistema de persistencia de datos inicializado. Dir datos: data, Dir backups: backups
+2025-03-29 11:17:20,975 - notification_system - WARNING - Configuración de correo electrónico incompleta. Las notificaciones no funcionarán.
+2025-03-29 11:17:20,977 - main - INFO - Sistema robusto inicializado
+2025-03-29 11:17:20,979 - main - INFO - Iniciando sistema robusto de trading...
+2025-03-29 11:17:20,981 - main - INFO - Parámetros cargados desde archivo persistente
+2025-03-29 11:17:21,243 - binance_futures_bot - INFO - Bot de futuros configurado en modo PRODUCCIÓN
+2025-03-29 11:17:21,751 - binance_futures_bot - INFO - Apalancamiento configurado: 3x
+2025-03-29 11:17:21,999 - binance_futures_bot - ERROR - Error al configurar cuenta de futuros: APIError(code=-4046): No need to change margin type.
+2025-03-29 11:17:22,000 - binance_futures_bot - INFO - La cuenta ya está en margen ISOLATED
+2025-03-29 11:17:22,001 - binance_futures_bot - INFO - Bot de futuros inicializado para ETHUSDT en intervalo 1m
+2025-03-29 11:17:22,002 - main - INFO - Bot de FUTUROS inicializado para ETHUSDT en intervalo 1m
+2025-03-29 11:17:22,003 - main - INFO - Configuración: Apalancamiento 3x, Hedge Mode: False
+2025-03-29 11:17:22,229 - main - INFO - Estado del sistema Binance: {'status': 0, 'msg': 'normal'}
+2025-03-29 11:17:22,231 - main - INFO - Iniciando nuevo ciclo de análisis
+2025-03-29 11:17:22,465 - main - INFO - Datos históricos obtenidos. Última vela: 2025-03-29 16:17:00, Precio: 1843.05
+2025-03-29 11:17:22,475 - main - INFO - Indicadores técnicos calculados
+2025-03-29 11:17:22,476 - main - INFO - RSI: 52.71, BB Superior: 1847.79, BB Inferior: 1834.38, MACD: 1.367389, Señal MACD: 1.456450
+2025-03-29 11:17:22,701 - main - INFO - No hay posición abierta, verificando señales para futuros
+2025-03-29 11:17:22,704 - main - INFO - Análisis detallado de señales:
+2025-03-29 11:17:22,706 - main - INFO - Precio: 1843.05, BB Upper: 1847.79, BB Lower: 1834.38
+2025-03-29 11:17:22,708 - main - INFO - RSI: 52.71 (Sobrecompra >70, Sobreventa <30)
+2025-03-29 11:17:22,708 - main - INFO - MACD: 1.367389, Señal MACD: 1.456450, Dif: -0.089061
+2025-03-29 11:17:22,709 - main - INFO - Cruz BB inferior: False, RSI sobreventa: False
+2025-03-29 11:17:22,710 - main - INFO - Cruz BB superior: False, RSI sobrecompra: False
+2025-03-29 11:17:22,711 - main - INFO - Cruz MACD (alcista): False, Cruz MACD (bajista): True
+2025-03-29 11:17:22,712 - main - INFO - Resultado: Señal compra: False, Señal venta: False
+2025-03-29 11:17:22,712 - main - INFO - No se detectaron señales válidas. Esperando próximo ciclo.
+2025-03-29 11:17:22,713 - main - INFO - Ciclo de análisis completado. Esperando próximo intervalo.
+2025-03-29 11:17:52,715 - main - INFO - Iniciando nuevo ciclo de análisis
+2025-03-29 11:17:52,943 - main - INFO - Datos históricos obtenidos. Última vela: 2025-03-29 16:17:00, Precio: 1843.94
+2025-03-29 11:17:52,948 - main - INFO - Indicadores técnicos calculados
+2025-03-29 11:17:52,950 - main - INFO - RSI: 55.14, BB Superior: 1847.86, BB Inferior: 1834.37, MACD: 1.438386, Señal MACD: 1.470649
+2025-03-29 11:17:53,172 - main - INFO - No hay posición abierta, verificando señales para futuros
+2025-03-29 11:17:53,173 - main - INFO - Análisis detallado de señales:
+2025-03-29 11:17:53,174 - main - INFO - Precio: 1843.94, BB Upper: 1847.86, BB Lower: 1834.37
+2025-03-29 11:17:53,174 - main - INFO - RSI: 55.14 (Sobrecompra >70, Sobreventa <30)
+2025-03-29 11:17:53,175 - main - INFO - MACD: 1.438386, Señal MACD: 1.470649, Dif: -0.032264
+2025-03-29 11:17:53,175 - main - INFO - Cruz BB inferior: False, RSI sobreventa: False
+2025-03-29 11:17:53,176 - main - INFO - Cruz BB superior: False, RSI sobrecompra: False
+2025-03-29 11:17:53,176 - main - INFO - Cruz MACD (alcista): False, Cruz MACD (bajista): True
+2025-03-29 11:17:53,177 - main - INFO - Resultado: Señal compra: False, Señal venta: False
+2025-03-29 11:17:53,178 - main - INFO - No se detectaron señales válidas. Esperando próximo ciclo.
+2025-03-29 11:17:53,178 - main - INFO - Ciclo de análisis completado. Esperando próximo intervalo.
+2025-03-29 11:18:23,180 - main - INFO - Iniciando nuevo ciclo de análisis
+2025-03-29 11:18:23,423 - main - INFO - Datos históricos obtenidos. Última vela: 2025-03-29 16:18:00, Precio: 1844.11
+2025-03-29 11:18:23,430 - main - INFO - Indicadores técnicos calculados
+2025-03-29 11:18:23,432 - main - INFO - RSI: 55.62, BB Superior: 1848.03, BB Inferior: 1834.60, MACD: 1.351822, Señal MACD: 1.445225
+2025-03-29 11:18:23,655 - main - INFO - No hay posición abierta, verificando señales para futuros
+2025-03-29 11:18:23,657 - main - INFO - Análisis detallado de señales:
+2025-03-29 11:18:23,658 - main - INFO - Precio: 1844.11, BB Upper: 1848.03, BB Lower: 1834.60
+2025-03-29 11:18:23,658 - main - INFO - RSI: 55.62 (Sobrecompra >70, Sobreventa <30)
+2025-03-29 11:18:23,659 - main - INFO - MACD: 1.351822, Señal MACD: 1.445225, Dif: -0.093402
+2025-03-29 11:18:23,660 - main - INFO - Cruz BB inferior: False, RSI sobreventa: False
+2025-03-29 11:18:23,660 - main - INFO - Cruz BB superior: False, RSI sobrecompra: False
+2025-03-29 11:18:23,660 - main - INFO - Cruz MACD (alcista): False, Cruz MACD (bajista): False
+2025-03-29 11:18:23,661 - main - INFO - Resultado: Señal compra: False, Señal venta: False
+2025-03-29 11:18:23,662 - main - INFO - No se detectaron señales válidas. Esperando próximo ciclo.
+2025-03-29 11:18:23,662 - main - INFO - Ciclo de análisis completado. Esperando próximo intervalo.
+2025-03-29 11:18:53,664 - main - INFO - Iniciando nuevo ciclo de análisis
+2025-03-29 11:18:53,900 - main - INFO - Datos históricos obtenidos. Última vela: 2025-03-29 16:18:00, Precio: 1845.61
+2025-03-29 11:18:53,910 - main - INFO - Indicadores técnicos calculados
+2025-03-29 11:18:53,911 - main - INFO - RSI: 59.30, BB Superior: 1848.19, BB Inferior: 1834.54, MACD: 1.471480, Señal MACD: 1.469156
+2025-03-29 11:18:54,136 - main - INFO - No hay posición abierta, verificando señales para futuros
+2025-03-29 11:18:54,137 - main - INFO - Análisis detallado de señales:
+2025-03-29 11:18:54,138 - main - INFO - Precio: 1845.61, BB Upper: 1848.19, BB Lower: 1834.54
+2025-03-29 11:18:54,139 - main - INFO - RSI: 59.30 (Sobrecompra >70, Sobreventa <30)
+2025-03-29 11:18:54,139 - main - INFO - MACD: 1.471480, Señal MACD: 1.469156, Dif: 0.002324
+2025-03-29 11:18:54,140 - main - INFO - Cruz BB inferior: False, RSI sobreventa: False
+2025-03-29 11:18:54,141 - main - INFO - Cruz BB superior: False, RSI sobrecompra: False
+2025-03-29 11:18:54,142 - main - INFO - Cruz MACD (alcista): True, Cruz MACD (bajista): False
+2025-03-29 11:18:54,142 - main - INFO - Resultado: Señal compra: False, Señal venta: False
+2025-03-29 11:18:54,143 - main - INFO - No se detectaron señales válidas. Esperando próximo ciclo.
+2025-03-29 11:18:54,144 - main - INFO - Ciclo de análisis completado. Esperando próximo intervalo.
+2025-03-29 11:19:24,145 - main - INFO - Iniciando nuevo ciclo de análisis
+2025-03-29 11:19:24,385 - main - INFO - Datos históricos obtenidos. Última vela: 2025-03-29 16:19:00, Precio: 1843.65
+2025-03-29 11:19:24,406 - main - INFO - Indicadores técnicos calculados
+2025-03-29 11:19:24,408 - main - INFO - RSI: 53.44, BB Superior: 1848.23, BB Inferior: 1834.85, MACD: 1.295458, Señal MACD: 1.426758
+2025-03-29 11:19:24,634 - main - INFO - No hay posición abierta, verificando señales para futuros
+2025-03-29 11:19:24,636 - main - INFO - Análisis detallado de señales:
+2025-03-29 11:19:24,637 - main - INFO - Precio: 1843.65, BB Upper: 1848.23, BB Lower: 1834.85
+2025-03-29 11:19:24,639 - main - INFO - RSI: 53.44 (Sobrecompra >70, Sobreventa <30)
+2025-03-29 11:19:24,641 - main - INFO - MACD: 1.295458, Señal MACD: 1.426758, Dif: -0.131301
+2025-03-29 11:19:24,642 - main - INFO - Cruz BB inferior: False, RSI sobreventa: False
+2025-03-29 11:19:24,643 - main - INFO - Cruz BB superior: False, RSI sobrecompra: False
+2025-03-29 11:19:24,643 - main - INFO - Cruz MACD (alcista): False, Cruz MACD (bajista): False
+2025-03-29 11:19:24,645 - main - INFO - Resultado: Señal compra: False, Señal venta: False
+2025-03-29 11:19:24,646 - main - INFO - No se detectaron señales válidas. Esperando próximo ciclo.
+2025-03-29 11:19:24,646 - main - INFO - Ciclo de análisis completado. Esperando próximo intervalo.
+2025-03-29 11:19:54,649 - main - INFO - Iniciando nuevo ciclo de análisis
+2025-03-29 11:19:54,886 - main - INFO - Datos históricos obtenidos. Última vela: 2025-03-29 16:19:00, Precio: 1843.0
+2025-03-29 11:19:54,896 - main - INFO - Indicadores técnicos calculados
+2025-03-29 11:19:54,898 - main - INFO - RSI: 51.54, BB Superior: 1848.19, BB Inferior: 1834.85, MACD: 1.243606, Señal MACD: 1.416388
+2025-03-29 11:19:55,126 - main - INFO - No hay posición abierta, verificando señales para futuros
+2025-03-29 11:19:55,130 - main - INFO - Análisis detallado de señales:
+2025-03-29 11:19:55,132 - main - INFO - Precio: 1843.00, BB Upper: 1848.19, BB Lower: 1834.85
+2025-03-29 11:19:55,133 - main - INFO - RSI: 51.54 (Sobrecompra >70, Sobreventa <30)
+2025-03-29 11:19:55,134 - main - INFO - MACD: 1.243606, Señal MACD: 1.416388, Dif: -0.172782
+2025-03-29 11:19:55,135 - main - INFO - Cruz BB inferior: False, RSI sobreventa: False
+2025-03-29 11:19:55,137 - main - INFO - Cruz BB superior: False, RSI sobrecompra: False
+2025-03-29 11:19:55,138 - main - INFO - Cruz MACD (alcista): False, Cruz MACD (bajista): False
+2025-03-29 11:19:55,139 - main - INFO - Resultado: Señal compra: False, Señal venta: False
+2025-03-29 11:19:55,140 - main - INFO - No se detectaron señales válidas. Esperando próximo ciclo.
+2025-03-29 11:19:55,141 - main - INFO - Ciclo de análisis completado. Esperando próximo intervalo.
+2025-03-29 11:20:25,143 - main - INFO - Iniciando nuevo ciclo de análisis
+2025-03-29 11:20:25,387 - main - INFO - Datos históricos obtenidos. Última vela: 2025-03-29 16:20:00, Precio: 1842.58
+2025-03-29 11:20:25,408 - main - INFO - Indicadores técnicos calculados
+2025-03-29 11:20:25,410 - main - INFO - RSI: 50.35, BB Superior: 1848.21, BB Inferior: 1835.10, MACD: 1.036418, Señal MACD: 1.336565
+2025-03-29 11:20:25,640 - main - INFO - No hay posición abierta, verificando señales para futuros
+2025-03-29 11:20:25,643 - main - INFO - Análisis detallado de señales:
+2025-03-29 11:20:25,645 - main - INFO - Precio: 1842.58, BB Upper: 1848.21, BB Lower: 1835.10
+2025-03-29 11:20:25,647 - main - INFO - RSI: 50.35 (Sobrecompra >70, Sobreventa <30)
+2025-03-29 11:20:25,648 - main - INFO - MACD: 1.036418, Señal MACD: 1.336565, Dif: -0.300147
+2025-03-29 11:20:25,650 - main - INFO - Cruz BB inferior: False, RSI sobreventa: False
+2025-03-29 11:20:25,652 - main - INFO - Cruz BB superior: False, RSI sobrecompra: False
+2025-03-29 11:20:25,653 - main - INFO - Cruz MACD (alcista): False, Cruz MACD (bajista): False
+2025-03-29 11:20:25,655 - main - INFO - Resultado: Señal compra: False, Señal venta: False
+2025-03-29 11:20:25,657 - main - INFO - No se detectaron señales válidas. Esperando próximo ciclo.
+2025-03-29 11:20:25,659 - main - INFO - Ciclo de análisis completado. Esperando próximo intervalo.
+2025-03-29 11:20:55,662 - main - INFO - Iniciando nuevo ciclo de análisis
+2025-03-29 11:20:55,931 - main - INFO - Datos históricos obtenidos. Última vela: 2025-03-29 16:20:00, Precio: 1842.01
+2025-03-29 11:20:55,950 - main - INFO - Indicadores técnicos calculados
+2025-03-29 11:20:55,952 - main - INFO - RSI: 48.75, BB Superior: 1848.18, BB Inferior: 1835.09, MACD: 0.990948, Señal MACD: 1.327471
+2025-03-29 11:20:56,179 - main - INFO - No hay posición abierta, verificando señales para futuros
+2025-03-29 11:20:56,181 - main - INFO - Análisis detallado de señales:
+2025-03-29 11:20:56,183 - main - INFO - Precio: 1842.01, BB Upper: 1848.18, BB Lower: 1835.09
+2025-03-29 11:20:56,184 - main - INFO - RSI: 48.75 (Sobrecompra >70, Sobreventa <30)
+2025-03-29 11:20:56,185 - main - INFO - MACD: 0.990948, Señal MACD: 1.327471, Dif: -0.336523
+2025-03-29 11:20:56,187 - main - INFO - Cruz BB inferior: False, RSI sobreventa: False
+2025-03-29 11:20:56,190 - main - INFO - Cruz BB superior: False, RSI sobrecompra: False
+2025-03-29 11:20:56,191 - main - INFO - Cruz MACD (alcista): False, Cruz MACD (bajista): False
+2025-03-29 11:20:56,192 - main - INFO - Resultado: Señal compra: False, Señal venta: False
+2025-03-29 11:20:56,194 - main - INFO - No se detectaron señales válidas. Esperando próximo ciclo.
+2025-03-29 11:20:56,195 - main - INFO - Ciclo de análisis completado. Esperando próximo intervalo.
+2025-03-29 11:21:26,197 - main - INFO - Iniciando nuevo ciclo de análisis
+2025-03-29 11:21:26,436 - main - INFO - Datos históricos obtenidos. Última vela: 2025-03-29 16:21:00, Precio: 1842.73
+2025-03-29 11:21:26,458 - main - INFO - Indicadores técnicos calculados
+2025-03-29 11:21:26,460 - main - INFO - RSI: 50.79, BB Superior: 1848.12, BB Inferior: 1835.63, MACD: 0.901002, Señal MACD: 1.251112
+2025-03-29 11:21:26,681 - main - INFO - No hay posición abierta, verificando señales para futuros
+2025-03-29 11:21:26,683 - main - INFO - Análisis detallado de señales:
+2025-03-29 11:21:26,685 - main - INFO - Precio: 1842.73, BB Upper: 1848.12, BB Lower: 1835.63
+2025-03-29 11:21:26,686 - main - INFO - RSI: 50.79 (Sobrecompra >70, Sobreventa <30)
+2025-03-29 11:21:26,688 - main - INFO - MACD: 0.901002, Señal MACD: 1.251112, Dif: -0.350109
+2025-03-29 11:21:26,690 - main - INFO - Cruz BB inferior: False, RSI sobreventa: False
+2025-03-29 11:21:26,692 - main - INFO - Cruz BB superior: False, RSI sobrecompra: False
+2025-03-29 11:21:26,694 - main - INFO - Cruz MACD (alcista): False, Cruz MACD (bajista): False
+2025-03-29 11:21:26,696 - main - INFO - Resultado: Señal compra: False, Señal venta: False
+2025-03-29 11:21:26,698 - main - INFO - No se detectaron señales válidas. Esperando próximo ciclo.
+2025-03-29 11:21:26,699 - main - INFO - Ciclo de análisis completado. Esperando próximo intervalo.
+2025-03-29 11:21:56,700 - main - INFO - Iniciando nuevo ciclo de análisis
+2025-03-29 11:21:56,941 - main - INFO - Datos históricos obtenidos. Última vela: 2025-03-29 16:21:00, Precio: 1841.48
+2025-03-29 11:21:56,963 - main - INFO - Indicadores técnicos calculados
+2025-03-29 11:21:56,965 - main - INFO - RSI: 47.12, BB Superior: 1848.07, BB Inferior: 1835.59, MACD: 0.801287, Señal MACD: 1.231169
+2025-03-29 11:21:57,195 - main - INFO - No hay posición abierta, verificando señales para futuros
+2025-03-29 11:21:57,197 - main - INFO - Análisis detallado de señales:
+2025-03-29 11:21:57,198 - main - INFO - Precio: 1841.48, BB Upper: 1848.07, BB Lower: 1835.59
+2025-03-29 11:21:57,200 - main - INFO - RSI: 47.12 (Sobrecompra >70, Sobreventa <30)
+2025-03-29 11:21:57,201 - main - INFO - MACD: 0.801287, Señal MACD: 1.231169, Dif: -0.429881
+2025-03-29 11:21:57,202 - main - INFO - Cruz BB inferior: False, RSI sobreventa: False
+2025-03-29 11:21:57,204 - main - INFO - Cruz BB superior: False, RSI sobrecompra: False
+2025-03-29 11:21:57,205 - main - INFO - Cruz MACD (alcista): False, Cruz MACD (bajista): False
+2025-03-29 11:21:57,206 - main - INFO - Resultado: Señal compra: False, Señal venta: False
+2025-03-29 11:21:57,207 - main - INFO - No se detectaron señales válidas. Esperando próximo ciclo.
+2025-03-29 11:21:57,208 - main - INFO - Ciclo de análisis completado. Esperando próximo intervalo.
+2025-03-29 11:22:27,210 - main - INFO - Iniciando nuevo ciclo de análisis
+2025-03-29 11:22:27,446 - main - INFO - Datos históricos obtenidos. Última vela: 2025-03-29 16:22:00, Precio: 1841.51
+2025-03-29 11:22:27,467 - main - INFO - Indicadores técnicos calculados
+2025-03-29 11:22:27,469 - main - INFO - RSI: 47.18, BB Superior: 1847.97, BB Inferior: 1835.98, MACD: 0.609596, Señal MACD: 1.108386
+2025-03-29 11:22:27,707 - main - INFO - No hay posición abierta, verificando señales para futuros
+2025-03-29 11:22:27,709 - main - INFO - Análisis detallado de señales:
+2025-03-29 11:22:27,711 - main - INFO - Precio: 1841.51, BB Upper: 1847.97, BB Lower: 1835.98
+2025-03-29 11:22:27,713 - main - INFO - RSI: 47.18 (Sobrecompra >70, Sobreventa <30)
+2025-03-29 11:22:27,714 - main - INFO - MACD: 0.609596, Señal MACD: 1.108386, Dif: -0.498790
+2025-03-29 11:22:27,716 - main - INFO - Cruz BB inferior: False, RSI sobreventa: False
+2025-03-29 11:22:27,718 - main - INFO - Cruz BB superior: False, RSI sobrecompra: False
+2025-03-29 11:22:27,720 - main - INFO - Cruz MACD (alcista): False, Cruz MACD (bajista): False
+2025-03-29 11:22:27,722 - main - INFO - Resultado: Señal compra: False, Señal venta: False
+2025-03-29 11:22:27,723 - main - INFO - No se detectaron señales válidas. Esperando próximo ciclo.
+2025-03-29 11:22:27,725 - main - INFO - Ciclo de análisis completado. Esperando próximo intervalo.
+2025-03-29 11:22:57,734 - main - INFO - Iniciando nuevo ciclo de análisis
+2025-03-29 11:22:57,966 - main - INFO - Datos históricos obtenidos. Última vela: 2025-03-29 16:22:00, Precio: 1841.86
+2025-03-29 11:22:57,977 - main - INFO - Indicadores técnicos calculados
+2025-03-29 11:22:57,978 - main - INFO - RSI: 48.29, BB Superior: 1847.98, BB Inferior: 1836.00, MACD: 0.637516, Señal MACD: 1.113970
+2025-03-29 11:22:58,200 - main - INFO - No hay posición abierta, verificando señales para futuros
+2025-03-29 11:22:58,203 - main - INFO - Análisis detallado de señales:
+2025-03-29 11:22:58,205 - main - INFO - Precio: 1841.86, BB Upper: 1847.98, BB Lower: 1836.00
+2025-03-29 11:22:58,207 - main - INFO - RSI: 48.29 (Sobrecompra >70, Sobreventa <30)
+2025-03-29 11:22:58,209 - main - INFO - MACD: 0.637516, Señal MACD: 1.113970, Dif: -0.476454
+2025-03-29 11:22:58,211 - main - INFO - Cruz BB inferior: False, RSI sobreventa: False
+2025-03-29 11:22:58,213 - main - INFO - Cruz BB superior: False, RSI sobrecompra: False
+2025-03-29 11:22:58,215 - main - INFO - Cruz MACD (alcista): False, Cruz MACD (bajista): False
+2025-03-29 11:22:58,217 - main - INFO - Resultado: Señal compra: False, Señal venta: False
+2025-03-29 11:22:58,219 - main - INFO - No se detectaron señales válidas. Esperando próximo ciclo.
+2025-03-29 11:22:58,221 - main - INFO - Ciclo de análisis completado. Esperando próximo intervalo.
+2025-03-29 11:23:28,224 - main - INFO - Iniciando nuevo ciclo de análisis
+2025-03-29 11:23:28,458 - main - INFO - Datos históricos obtenidos. Última vela: 2025-03-29 16:23:00, Precio: 1842.49
+2025-03-29 11:23:28,477 - main - INFO - Indicadores técnicos calculados
+2025-03-29 11:23:28,480 - main - INFO - RSI: 50.40, BB Superior: 1847.96, BB Inferior: 1836.29, MACD: 0.537306, Señal MACD: 0.997105
+2025-03-29 11:23:28,704 - main - INFO - No hay posición abierta, verificando señales para futuros
+2025-03-29 11:23:28,705 - main - INFO - Análisis detallado de señales:
+2025-03-29 11:23:28,706 - main - INFO - Precio: 1842.49, BB Upper: 1847.96, BB Lower: 1836.29
+2025-03-29 11:23:28,708 - main - INFO - RSI: 50.40 (Sobrecompra >70, Sobreventa <30)
+2025-03-29 11:23:28,709 - main - INFO - MACD: 0.537306, Señal MACD: 0.997105, Dif: -0.459800
+2025-03-29 11:23:28,712 - main - INFO - Cruz BB inferior: False, RSI sobreventa: False
+2025-03-29 11:23:28,713 - main - INFO - Cruz BB superior: False, RSI sobrecompra: False
+2025-03-29 11:23:28,714 - main - INFO - Cruz MACD (alcista): False, Cruz MACD (bajista): False
+2025-03-29 11:23:28,715 - main - INFO - Resultado: Señal compra: False, Señal venta: False
+2025-03-29 11:23:28,717 - main - INFO - No se detectaron señales válidas. Esperando próximo ciclo.
+2025-03-29 11:23:28,719 - main - INFO - Ciclo de análisis completado. Esperando próximo intervalo.
+2025-03-29 11:23:58,721 - main - INFO - Iniciando nuevo ciclo de análisis
+2025-03-29 11:23:58,953 - main - INFO - Datos históricos obtenidos. Última vela: 2025-03-29 16:23:00, Precio: 1842.12
+2025-03-29 11:23:58,973 - main - INFO - Indicadores técnicos calculados
+2025-03-29 11:23:58,974 - main - INFO - RSI: 49.20, BB Superior: 1847.94, BB Inferior: 1836.28, MACD: 0.507790, Señal MACD: 0.991202
+2025-03-29 11:23:59,197 - main - INFO - No hay posición abierta, verificando señales para futuros
+2025-03-29 11:23:59,199 - main - INFO - Análisis detallado de señales:
+2025-03-29 11:23:59,201 - main - INFO - Precio: 1842.12, BB Upper: 1847.94, BB Lower: 1836.28
+2025-03-29 11:23:59,203 - main - INFO - RSI: 49.20 (Sobrecompra >70, Sobreventa <30)
+2025-03-29 11:23:59,204 - main - INFO - MACD: 0.507790, Señal MACD: 0.991202, Dif: -0.483412
+2025-03-29 11:23:59,206 - main - INFO - Cruz BB inferior: False, RSI sobreventa: False
+2025-03-29 11:23:59,207 - main - INFO - Cruz BB superior: False, RSI sobrecompra: False
+2025-03-29 11:23:59,209 - main - INFO - Cruz MACD (alcista): False, Cruz MACD (bajista): False
+2025-03-29 11:23:59,211 - main - INFO - Resultado: Señal compra: False, Señal venta: False
+2025-03-29 11:23:59,212 - main - INFO - No se detectaron señales válidas. Esperando próximo ciclo.
+2025-03-29 11:23:59,214 - main - INFO - Ciclo de análisis completado. Esperando próximo intervalo.
+2025-03-29 11:24:29,215 - main - INFO - Iniciando nuevo ciclo de análisis
+2025-03-29 11:24:29,453 - main - INFO - Datos históricos obtenidos. Última vela: 2025-03-29 16:24:00, Precio: 1841.0
+2025-03-29 11:24:29,472 - main - INFO - Indicadores técnicos calculados
+2025-03-29 11:24:29,474 - main - INFO - RSI: 45.61, BB Superior: 1847.87, BB Inferior: 1836.53, MACD: 0.319753, Señal MACD: 0.857168
+2025-03-29 11:24:29,700 - main - INFO - No hay posición abierta, verificando señales para futuros
+2025-03-29 11:24:29,702 - main - INFO - Análisis detallado de señales:
+2025-03-29 11:24:29,704 - main - INFO - Precio: 1841.00, BB Upper: 1847.87, BB Lower: 1836.53
+2025-03-29 11:24:29,706 - main - INFO - RSI: 45.61 (Sobrecompra >70, Sobreventa <30)
+2025-03-29 11:24:29,707 - main - INFO - MACD: 0.319753, Señal MACD: 0.857168, Dif: -0.537415
+2025-03-29 11:24:29,709 - main - INFO - Cruz BB inferior: False, RSI sobreventa: False
+2025-03-29 11:24:29,711 - main - INFO - Cruz BB superior: False, RSI sobrecompra: False
+2025-03-29 11:24:29,711 - main - INFO - Cruz MACD (alcista): False, Cruz MACD (bajista): False
+2025-03-29 11:24:29,712 - main - INFO - Resultado: Señal compra: False, Señal venta: False
+2025-03-29 11:24:29,714 - main - INFO - No se detectaron señales válidas. Esperando próximo ciclo.
+2025-03-29 11:24:29,715 - main - INFO - Ciclo de análisis completado. Esperando próximo intervalo.
+2025-03-29 11:24:59,717 - main - INFO - Iniciando nuevo ciclo de análisis
+2025-03-29 11:24:59,950 - main - INFO - Datos históricos obtenidos. Última vela: 2025-03-29 16:24:00, Precio: 1838.72
+2025-03-29 11:24:59,972 - main - INFO - Indicadores técnicos calculados
+2025-03-29 11:24:59,975 - main - INFO - RSI: 39.71, BB Superior: 1847.92, BB Inferior: 1836.33, MACD: 0.137873, Señal MACD: 0.820791
+2025-03-29 11:25:00,202 - main - INFO - No hay posición abierta, verificando señales para futuros
+2025-03-29 11:25:00,204 - main - INFO - Análisis detallado de señales:
+2025-03-29 11:25:00,206 - main - INFO - Precio: 1838.72, BB Upper: 1847.92, BB Lower: 1836.33
+2025-03-29 11:25:00,208 - main - INFO - RSI: 39.71 (Sobrecompra >70, Sobreventa <30)
+2025-03-29 11:25:00,210 - main - INFO - MACD: 0.137873, Señal MACD: 0.820791, Dif: -0.682919
+2025-03-29 11:25:00,212 - main - INFO - Cruz BB inferior: False, RSI sobreventa: False
+2025-03-29 11:25:00,213 - main - INFO - Cruz BB superior: False, RSI sobrecompra: False
+2025-03-29 11:25:00,215 - main - INFO - Cruz MACD (alcista): False, Cruz MACD (bajista): False
+2025-03-29 11:25:00,216 - main - INFO - Resultado: Señal compra: False, Señal venta: False
+2025-03-29 11:25:00,218 - main - INFO - No se detectaron señales válidas. Esperando próximo ciclo.
+2025-03-29 11:25:00,219 - main - INFO - Ciclo de análisis completado. Esperando próximo intervalo.
+2025-03-29 11:25:30,222 - main - INFO - Iniciando nuevo ciclo de análisis
+2025-03-29 11:25:30,466 - main - INFO - Datos históricos obtenidos. Última vela: 2025-03-29 16:25:00, Precio: 1838.08
+2025-03-29 11:25:30,487 - main - INFO - Indicadores técnicos calculados
+2025-03-29 11:25:30,490 - main - INFO - RSI: 38.23, BB Superior: 1847.79, BB Inferior: 1836.56, MACD: -0.208903, Señal MACD: 0.614214
+2025-03-29 11:25:30,744 - main - INFO - No hay posición abierta, verificando señales para futuros
+2025-03-29 11:25:30,749 - main - INFO - Análisis detallado de señales:
+2025-03-29 11:25:30,751 - main - INFO - Precio: 1838.08, BB Upper: 1847.79, BB Lower: 1836.56
+2025-03-29 11:25:30,753 - main - INFO - RSI: 38.23 (Sobrecompra >70, Sobreventa <30)
+2025-03-29 11:25:30,754 - main - INFO - MACD: -0.208903, Señal MACD: 0.614214, Dif: -0.823118
+2025-03-29 11:25:30,756 - main - INFO - Cruz BB inferior: False, RSI sobreventa: False
+2025-03-29 11:25:30,758 - main - INFO - Cruz BB superior: False, RSI sobrecompra: False
+2025-03-29 11:25:30,761 - main - INFO - Cruz MACD (alcista): False, Cruz MACD (bajista): False
+2025-03-29 11:25:30,762 - main - INFO - Resultado: Señal compra: False, Señal venta: False
+2025-03-29 11:25:30,764 - main - INFO - No se detectaron señales válidas. Esperando próximo ciclo.
+2025-03-29 11:25:30,766 - main - INFO - Ciclo de análisis completado. Esperando próximo intervalo.
+2025-03-29 11:26:00,768 - main - INFO - Iniciando nuevo ciclo de análisis
+2025-03-29 11:26:01,006 - main - INFO - Datos históricos obtenidos. Última vela: 2025-03-29 16:25:00, Precio: 1838.13
+2025-03-29 11:26:01,017 - main - INFO - Indicadores técnicos calculados
+2025-03-29 11:26:01,018 - main - INFO - RSI: 38.34, BB Superior: 1847.79, BB Inferior: 1836.56, MACD: -0.204915, Señal MACD: 0.615012
+2025-03-29 11:26:01,239 - main - INFO - No hay posición abierta, verificando señales para futuros
+2025-03-29 11:26:01,240 - main - INFO - Análisis detallado de señales:
+2025-03-29 11:26:01,241 - main - INFO - Precio: 1838.13, BB Upper: 1847.79, BB Lower: 1836.56
+2025-03-29 11:26:01,242 - main - INFO - RSI: 38.34 (Sobrecompra >70, Sobreventa <30)
+2025-03-29 11:26:01,243 - main - INFO - MACD: -0.204915, Señal MACD: 0.615012, Dif: -0.819927
+2025-03-29 11:26:01,244 - main - INFO - Cruz BB inferior: False, RSI sobreventa: False
+2025-03-29 11:26:01,245 - main - INFO - Cruz BB superior: False, RSI sobrecompra: False
+2025-03-29 11:26:01,246 - main - INFO - Cruz MACD (alcista): False, Cruz MACD (bajista): False
+2025-03-29 11:26:01,246 - main - INFO - Resultado: Señal compra: False, Señal venta: False
+2025-03-29 11:26:01,247 - main - INFO - No se detectaron señales válidas. Esperando próximo ciclo.
+2025-03-29 11:26:01,247 - main - INFO - Ciclo de análisis completado. Esperando próximo intervalo.
+2025-03-29 11:26:31,250 - main - INFO - Iniciando nuevo ciclo de análisis
+2025-03-29 11:26:31,477 - main - INFO - Datos históricos obtenidos. Última vela: 2025-03-29 16:26:00, Precio: 1835.99
+2025-03-29 11:26:31,484 - main - INFO - Indicadores técnicos calculados
+2025-03-29 11:26:31,485 - main - INFO - RSI: 33.78, BB Superior: 1847.80, BB Inferior: 1836.54, MACD: -0.652283, Señal MACD: 0.358745
+2025-03-29 11:26:31,706 - main - INFO - No hay posición abierta, verificando señales para futuros
+2025-03-29 11:26:31,708 - main - INFO - Análisis detallado de señales:
+2025-03-29 11:26:31,709 - main - INFO - Precio: 1835.99, BB Upper: 1847.80, BB Lower: 1836.54
+2025-03-29 11:26:31,709 - main - INFO - RSI: 33.78 (Sobrecompra >70, Sobreventa <30)
+2025-03-29 11:26:31,710 - main - INFO - MACD: -0.652283, Señal MACD: 0.358745, Dif: -1.011028
+2025-03-29 11:26:31,712 - main - INFO - Cruz BB inferior: False, RSI sobreventa: False
+2025-03-29 11:26:31,713 - main - INFO - Cruz BB superior: False, RSI sobrecompra: False
+2025-03-29 11:26:31,714 - main - INFO - Cruz MACD (alcista): False, Cruz MACD (bajista): False
+2025-03-29 11:26:31,715 - main - INFO - Resultado: Señal compra: False, Señal venta: False
+2025-03-29 11:26:31,716 - main - INFO - No se detectaron señales válidas. Esperando próximo ciclo.
+2025-03-29 11:26:31,717 - main - INFO - Ciclo de análisis completado. Esperando próximo intervalo.
+2025-03-29 11:27:01,719 - main - INFO - Iniciando nuevo ciclo de análisis
+2025-03-29 11:27:01,946 - main - INFO - Datos históricos obtenidos. Última vela: 2025-03-29 16:26:00, Precio: 1836.08
+2025-03-29 11:27:01,953 - main - INFO - Indicadores técnicos calculados
+2025-03-29 11:27:01,954 - main - INFO - RSI: 33.95, BB Superior: 1847.79, BB Inferior: 1836.55, MACD: -0.645103, Señal MACD: 0.360181
+2025-03-29 11:27:02,180 - main - INFO - No hay posición abierta, verificando señales para futuros
+2025-03-29 11:27:02,181 - main - INFO - Análisis detallado de señales:
+2025-03-29 11:27:02,182 - main - INFO - Precio: 1836.08, BB Upper: 1847.79, BB Lower: 1836.55
+2025-03-29 11:27:02,183 - main - INFO - RSI: 33.95 (Sobrecompra >70, Sobreventa <30)
+2025-03-29 11:27:02,184 - main - INFO - MACD: -0.645103, Señal MACD: 0.360181, Dif: -1.005284
+2025-03-29 11:27:02,185 - main - INFO - Cruz BB inferior: False, RSI sobreventa: False
+2025-03-29 11:27:02,186 - main - INFO - Cruz BB superior: False, RSI sobrecompra: False
+2025-03-29 11:27:02,187 - main - INFO - Cruz MACD (alcista): False, Cruz MACD (bajista): False
+2025-03-29 11:27:02,187 - main - INFO - Resultado: Señal compra: False, Señal venta: False
+2025-03-29 11:27:02,188 - main - INFO - No se detectaron señales válidas. Esperando próximo ciclo.
+2025-03-29 11:27:02,188 - main - INFO - Ciclo de análisis completado. Esperando próximo intervalo.
+2025-03-29 11:27:32,190 - main - INFO - Iniciando nuevo ciclo de análisis
+2025-03-29 11:27:32,428 - main - INFO - Datos históricos obtenidos. Última vela: 2025-03-29 16:27:00, Precio: 1836.43
+2025-03-29 11:27:32,444 - main - INFO - Indicadores técnicos calculados
+2025-03-29 11:27:32,446 - main - INFO - RSI: 35.00, BB Superior: 1847.80, BB Inferior: 1836.53, MACD: -0.930488, Señal MACD: 0.104217
+2025-03-29 11:27:32,674 - main - INFO - No hay posición abierta, verificando señales para futuros
+2025-03-29 11:27:32,675 - main - INFO - Análisis detallado de señales:
+2025-03-29 11:27:32,676 - main - INFO - Precio: 1836.43, BB Upper: 1847.80, BB Lower: 1836.53
+2025-03-29 11:27:32,676 - main - INFO - RSI: 35.00 (Sobrecompra >70, Sobreventa <30)
+2025-03-29 11:27:32,677 - main - INFO - MACD: -0.930488, Señal MACD: 0.104217, Dif: -1.034705
+2025-03-29 11:27:32,677 - main - INFO - Cruz BB inferior: False, RSI sobreventa: False
+2025-03-29 11:27:32,678 - main - INFO - Cruz BB superior: False, RSI sobrecompra: False
+2025-03-29 11:27:32,679 - main - INFO - Cruz MACD (alcista): False, Cruz MACD (bajista): False
+2025-03-29 11:27:32,680 - main - INFO - Resultado: Señal compra: False, Señal venta: False
+2025-03-29 11:27:32,680 - main - INFO - No se detectaron señales válidas. Esperando próximo ciclo.
+2025-03-29 11:27:32,681 - main - INFO - Ciclo de análisis completado. Esperando próximo intervalo.
+2025-03-29 11:28:02,686 - main - INFO - Iniciando nuevo ciclo de análisis
+2025-03-29 11:28:02,928 - main - INFO - Datos históricos obtenidos. Última vela: 2025-03-29 16:27:00, Precio: 1837.2
+2025-03-29 11:28:02,947 - main - INFO - Indicadores técnicos calculados
+2025-03-29 11:28:02,949 - main - INFO - RSI: 37.89, BB Superior: 1847.73, BB Inferior: 1836.66, MACD: -0.869063, Señal MACD: 0.116502
+2025-03-29 11:28:03,173 - main - INFO - No hay posición abierta, verificando señales para futuros
+2025-03-29 11:28:03,176 - main - INFO - Análisis detallado de señales:
+2025-03-29 11:28:03,177 - main - INFO - Precio: 1837.20, BB Upper: 1847.73, BB Lower: 1836.66
+2025-03-29 11:28:03,180 - main - INFO - RSI: 37.89 (Sobrecompra >70, Sobreventa <30)
+2025-03-29 11:28:03,182 - main - INFO - MACD: -0.869063, Señal MACD: 0.116502, Dif: -0.985565
+2025-03-29 11:28:03,184 - main - INFO - Cruz BB inferior: True, RSI sobreventa: False
+2025-03-29 11:28:03,186 - main - INFO - Cruz BB superior: False, RSI sobrecompra: False
+2025-03-29 11:28:03,188 - main - INFO - Cruz MACD (alcista): False, Cruz MACD (bajista): False
+2025-03-29 11:28:03,190 - main - INFO - Resultado: Señal compra: False, Señal venta: False
+2025-03-29 11:28:03,192 - main - INFO - No se detectaron señales válidas. Esperando próximo ciclo.
+2025-03-29 11:28:03,194 - main - INFO - Ciclo de análisis completado. Esperando próximo intervalo.
+2025-03-29 11:28:33,197 - main - INFO - Iniciando nuevo ciclo de análisis
+2025-03-29 11:28:33,428 - main - INFO - Datos históricos obtenidos. Última vela: 2025-03-29 16:28:00, Precio: 1836.65
+2025-03-29 11:28:33,452 - main - INFO - Indicadores técnicos calculados
+2025-03-29 11:28:33,454 - main - INFO - RSI: 36.65, BB Superior: 1847.78, BB Inferior: 1836.56, MACD: -1.088510, Señal MACD: -0.124373
+2025-03-29 11:28:33,676 - main - INFO - No hay posición abierta, verificando señales para futuros
+2025-03-29 11:28:33,678 - main - INFO - Análisis detallado de señales:
+2025-03-29 11:28:33,679 - main - INFO - Precio: 1836.65, BB Upper: 1847.78, BB Lower: 1836.56
+2025-03-29 11:28:33,681 - main - INFO - RSI: 36.65 (Sobrecompra >70, Sobreventa <30)
+2025-03-29 11:28:33,683 - main - INFO - MACD: -1.088510, Señal MACD: -0.124373, Dif: -0.964138
+2025-03-29 11:28:33,685 - main - INFO - Cruz BB inferior: False, RSI sobreventa: False
+2025-03-29 11:28:33,687 - main - INFO - Cruz BB superior: False, RSI sobrecompra: False
+2025-03-29 11:28:33,689 - main - INFO - Cruz MACD (alcista): False, Cruz MACD (bajista): False
+2025-03-29 11:28:33,691 - main - INFO - Resultado: Señal compra: False, Señal venta: False
+2025-03-29 11:28:33,693 - main - INFO - No se detectaron señales válidas. Esperando próximo ciclo.
+2025-03-29 11:28:33,694 - main - INFO - Ciclo de análisis completado. Esperando próximo intervalo.
+2025-03-29 11:29:03,696 - main - INFO - Iniciando nuevo ciclo de análisis
+2025-03-29 11:29:03,940 - main - INFO - Datos históricos obtenidos. Última vela: 2025-03-29 16:29:00, Precio: 1837.0
+2025-03-29 11:29:03,954 - main - INFO - Indicadores técnicos calculados
+2025-03-29 11:29:03,956 - main - INFO - RSI: 38.17, BB Superior: 1847.93, BB Inferior: 1836.26, MACD: -1.225053, Señal MACD: -0.345402
+2025-03-29 11:29:04,185 - main - INFO - No hay posición abierta, verificando señales para futuros
+2025-03-29 11:29:04,188 - main - INFO - Análisis detallado de señales:
+2025-03-29 11:29:04,190 - main - INFO - Precio: 1837.00, BB Upper: 1847.93, BB Lower: 1836.26
+2025-03-29 11:29:04,192 - main - INFO - RSI: 38.17 (Sobrecompra >70, Sobreventa <30)
+2025-03-29 11:29:04,194 - main - INFO - MACD: -1.225053, Señal MACD: -0.345402, Dif: -0.879651
+2025-03-29 11:29:04,197 - main - INFO - Cruz BB inferior: False, RSI sobreventa: False
+2025-03-29 11:29:04,198 - main - INFO - Cruz BB superior: False, RSI sobrecompra: False
+2025-03-29 11:29:04,200 - main - INFO - Cruz MACD (alcista): False, Cruz MACD (bajista): False
+2025-03-29 11:29:04,203 - main - INFO - Resultado: Señal compra: False, Señal venta: False
+2025-03-29 11:29:04,204 - main - INFO - No se detectaron señales válidas. Esperando próximo ciclo.
+2025-03-29 11:29:04,206 - main - INFO - Ciclo de análisis completado. Esperando próximo intervalo.
+2025-03-29 11:29:25,810 - main - INFO - Recibida señal de apagado (2)
+2025-03-29 11:29:25,968 - main - INFO - Recibida señal de apagado (2)
+2025-03-29 11:29:26,157 - main - INFO - Recibida señal de apagado (2)
+2025-03-29 11:29:26,343 - main - INFO - Recibida señal de apagado (2)
+2025-03-29 11:29:26,660 - main - INFO - Recibida señal de apagado (2)
+2025-03-29 11:29:27,101 - main - INFO - Recibida señal de apagado (2)
+2025-03-29 11:29:27,603 - main - INFO - Recibida señal de apagado (2)
+2025-03-29 11:29:27,759 - main - INFO - Recibida señal de apagado (2)
+2025-03-29 11:29:27,912 - main - INFO - Recibida señal de apagado (2)
+2025-03-29 11:29:28,066 - main - INFO - Recibida señal de apagado (2)
+2025-03-29 11:29:28,269 - main - INFO - Recibida señal de apagado (2)
+2025-03-29 11:29:33,399 - main - INFO - Recibida señal de apagado (2)
+2025-03-29 11:29:33,558 - main - INFO - Recibida señal de apagado (2)
+2025-03-29 11:29:33,722 - main - INFO - Recibida señal de apagado (2)
+2025-03-29 11:29:33,890 - main - INFO - Recibida señal de apagado (2)
+2025-03-29 11:29:34,072 - main - INFO - Recibida señal de apagado (2)
+2025-03-29 11:29:34,292 - main - INFO - Recibida señal de apagado (2)
+2025-03-29 11:29:34,295 - data_persistence - INFO - Hilo de backup automático detenido
+2025-03-29 11:29:34,297 - health_endpoint - INFO - Deteniendo servidor de health check...
+2025-03-29 11:29:34,399 - health_endpoint - INFO - Servidor de health check detenido
+2025-03-29 11:29:34,401 - main - INFO - Recibida señal de apagado (2)
+2025-03-29 11:29:34,412 - main - INFO - Limpieza finalizada correctamente
+2025-03-29 11:29:34,413 - main - INFO - Sistema detenido correctamente

@@ -18,7 +18,7 @@ from healthcheck import HealthCheckServer
 
 # Configuración mejorada de logging
 def setup_logging():
-    """Configura el sistema de logging con rotación de archivos"""
+    """Configura el sistema de logging con rotación de archivos y consola"""
     log_dir = 'logs'
     os.makedirs(log_dir, exist_ok=True)
     
@@ -26,15 +26,37 @@ def setup_logging():
     today = datetime.now().strftime('%Y-%m-%d')
     log_file = f"{log_dir}/bot_{today}.log"
     
-    logging.basicConfig(
-        level=logging.INFO,
-        format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-        handlers=[
-            logging.FileHandler(log_file),
-            logging.StreamHandler()
-        ]
-    )
-    return logging.getLogger("robust_main")
+    # Formateo personalizado con colores para consola
+    class ColoredFormatter(logging.Formatter):
+        COLORS = {
+            'DEBUG': '\033[36m',  # Cyan
+            'INFO': '\033[32m',   # Green
+            'WARNING': '\033[33m', # Yellow
+            'ERROR': '\033[31m',   # Red
+            'CRITICAL': '\033[41m', # Red background
+            'RESET': '\033[0m'     # Reset
+        }
+        
+        def format(self, record):
+            log_message = super().format(record)
+            if record.levelname in self.COLORS:
+                return f"{self.COLORS[record.levelname]}{log_message}{self.COLORS['RESET']}"
+            return log_message
+    
+    # Configurar handlers
+    file_handler = logging.FileHandler(log_file)
+    file_handler.setFormatter(logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s'))
+    
+    console_handler = logging.StreamHandler()
+    console_handler.setFormatter(ColoredFormatter('%(asctime)s - %(levelname)s - %(message)s'))
+    
+    # Configurar logger raíz
+    root_logger = logging.getLogger()
+    root_logger.setLevel(logging.INFO)
+    root_logger.addHandler(file_handler)
+    root_logger.addHandler(console_handler)
+    
+    return logging.getLogger("main")
 
 class RobustTradingBot:
     """Versión robusta del bot de trading con manejo de errores y recuperación"""
@@ -211,12 +233,16 @@ class RobustTradingBot:
     
     def _run_bot_cycle(self):
         """Ejecuta un ciclo completo del bot"""
+        self.logger.info("Iniciando nuevo ciclo de análisis")
+        
         # Obtener datos históricos
         df = self.bot.get_historical_klines()
         if df is None or df.empty:
             self.logger.warning("No se pudieron obtener datos históricos")
             self.health_server.update_bot_status({'status': 'warning', 'warning': 'No data available'})
             return
+        
+        self.logger.info(f"Datos históricos obtenidos. Última vela: {df.index[-1]}, Precio: {df['close'].iloc[-1]}")
         
         # Calcular indicadores
         if hasattr(self.bot, 'params') and 'calculate_indicators' in self.bot.params:
@@ -225,6 +251,14 @@ class RobustTradingBot:
             # Usar la clase IndicatorCalculator directamente si está disponible
             from binance_bot import IndicatorCalculator
             df = IndicatorCalculator.calculate_all_indicators(df, self.bot.params)
+        
+        self.logger.info("Indicadores técnicos calculados")
+        
+        # Imprimir valores actuales de indicadores
+        last_idx = -1
+        self.logger.info(f"RSI: {df['rsi'].iloc[last_idx]:.2f}, BB Superior: {df['bb_upper'].iloc[last_idx]:.2f}, "
+                        f"BB Inferior: {df['bb_lower'].iloc[last_idx]:.2f}, MACD: {df['macd'].iloc[last_idx]:.6f}, "
+                        f"Señal MACD: {df['macd_signal'].iloc[last_idx]:.6f}")
         
         # Verificar si hay posiciones abiertas
         self.bot.check_position_status()
@@ -242,6 +276,88 @@ class RobustTradingBot:
                 'leverage': self.bot.params.get('LEVERAGE', 3),
                 'last_price': float(df['close'].iloc[-1]) if not df.empty else None
             })
+            
+            # Verificar condiciones de entrada en futuros
+            if not self.bot.in_position:
+                self.logger.info("No hay posición abierta, verificando señales para futuros")
+                
+                # Verificar señales en los datos más recientes
+                from binance_bot import SignalGenerator
+                
+                buy_signal = SignalGenerator.check_buy_signal(df, -1)
+                sell_signal = SignalGenerator.check_sell_signal(df, -1)
+                
+                # Comprobando condiciones específicas para diagnosis
+                price = df['close'].iloc[-1]
+                bb_upper = df['bb_upper'].iloc[-1]
+                bb_lower = df['bb_lower'].iloc[-1]
+                rsi = df['rsi'].iloc[-1]
+                macd = df['macd'].iloc[-1]
+                macd_signal = df['macd_signal'].iloc[-1]
+                
+                self.logger.info(f"Análisis detallado de señales:")
+                self.logger.info(f"Precio: {price:.2f}, BB Upper: {bb_upper:.2f}, BB Lower: {bb_lower:.2f}")
+                self.logger.info(f"RSI: {rsi:.2f} (Sobrecompra >70, Sobreventa <30)")
+                self.logger.info(f"MACD: {macd:.6f}, Señal MACD: {macd_signal:.6f}, Dif: {macd - macd_signal:.6f}")
+                
+                # Verificar los cruces específicos de las condiciones
+                cross_lower_bb = False
+                rsi_oversold = False
+                macd_crossover = False
+                cross_upper_bb = False
+                rsi_overbought = False
+                macd_crossunder = False
+                
+                if len(df) > 1:
+                    prev_price = df['close'].iloc[-2]
+                    prev_bb_lower = df['bb_lower'].iloc[-2]
+                    prev_bb_upper = df['bb_upper'].iloc[-2]
+                    prev_macd = df['macd'].iloc[-2]
+                    prev_macd_signal = df['macd_signal'].iloc[-2]
+                    
+                    cross_lower_bb = (prev_price <= prev_bb_lower and price > bb_lower)
+                    rsi_oversold = rsi < 30
+                    macd_crossover = (prev_macd <= prev_macd_signal and macd > macd_signal)
+                    
+                    cross_upper_bb = (prev_price <= prev_bb_upper and price > bb_upper)
+                    rsi_overbought = rsi > 70
+                    macd_crossunder = (prev_macd >= prev_macd_signal and macd < macd_signal)
+                    
+                    self.logger.info(f"Cruz BB inferior: {cross_lower_bb}, RSI sobreventa: {rsi_oversold}")
+                    self.logger.info(f"Cruz BB superior: {cross_upper_bb}, RSI sobrecompra: {rsi_overbought}")
+                    self.logger.info(f"Cruz MACD (alcista): {macd_crossover}, Cruz MACD (bajista): {macd_crossunder}")
+                
+                self.logger.info(f"Resultado: Señal compra: {buy_signal}, Señal venta: {sell_signal}")
+                
+                if buy_signal:
+                    self.logger.info("¡SEÑAL DE COMPRA DETECTADA! Procediendo a abrir posición larga...")
+                    
+                    # Calcular factor de riesgo dinámico basado en ATR
+                    atr_value = df['atr'].iloc[-1]
+                    current_price = df['close'].iloc[-1]
+                    volatility = atr_value / current_price
+                    
+                    # Ajustar tamaño de posición inversamente proporcional a la volatilidad
+                    risk_factor = min(1.0, 0.02 / volatility) if volatility > 0 else 1.0
+                    self.logger.info(f"ATR: {atr_value:.2f}, Volatilidad: {volatility:.4f}, Factor de riesgo: {risk_factor:.2f}")
+                    
+                    # Ejecutar la orden
+                    self.bot.place_long_position(risk_factor)
+                    
+                elif sell_signal:
+                    self.logger.info("¡SEÑAL DE VENTA DETECTADA! Procediendo a abrir posición corta...")
+                    
+                    # Gestión de riesgo dinámica similar
+                    atr_value = df['atr'].iloc[-1]
+                    current_price = df['close'].iloc[-1]
+                    volatility = atr_value / current_price
+                    risk_factor = min(1.0, 0.02 / volatility) if volatility > 0 else 1.0
+                    self.logger.info(f"ATR: {atr_value:.2f}, Volatilidad: {volatility:.4f}, Factor de riesgo: {risk_factor:.2f}")
+                    
+                    # Ejecutar la orden
+                    self.bot.place_short_position(risk_factor)
+                else:
+                    self.logger.info("No se detectaron señales válidas. Esperando próximo ciclo.")
         else:
             # Para bot de spot
             self.health_server.update_bot_status({
@@ -250,15 +366,11 @@ class RobustTradingBot:
                 'position_entry_price': self.bot.entry_price if self.bot.in_position else None,
                 'last_price': float(df['close'].iloc[-1]) if not df.empty else None
             })
-        
-        # Si estamos en el modo de futuros, ejecutar el ciclo específico
-        if self.args.futures:
-            # El bot de futuros ya verifica las señales en su método check_position_status
-            # No necesitamos hacer más aquí, excepto actualizar el estado
-            pass
-        else:
+            
             # Ejecutar el ciclo para el bot de spot
             self._run_spot_bot_cycle(df)
+        
+        self.logger.info("Ciclo de análisis completado. Esperando próximo intervalo.")
     
     def _run_spot_bot_cycle(self, df):
         """Ejecuta el ciclo específico para el bot de spot"""

@@ -2,6 +2,7 @@
 import pandas as pd
 import numpy as np
 import time
+import traceback
 from binance.client import Client
 from binance.enums import *
 import ta
@@ -122,18 +123,48 @@ class SignalGenerator:
     def check_buy_signal(df, current_idx):
         """Verifica las condiciones de compra (posición larga)"""
         if current_idx < 1 or current_idx >= len(df):
+            logger.debug(f"Índice fuera de rango para check_buy_signal: {current_idx}")
             return False
         
         # Condición 1: Precio cruza por encima de la banda inferior de Bollinger y RSI < 30
         cross_lower_bb = (df['close'].iloc[current_idx-1] <= df['bb_lower'].iloc[current_idx-1] and
-                          df['close'].iloc[current_idx] > df['bb_lower'].iloc[current_idx])
+                        df['close'].iloc[current_idx] > df['bb_lower'].iloc[current_idx])
         rsi_oversold = df['rsi'].iloc[current_idx] < 30
+        condition1 = cross_lower_bb and rsi_oversold
         
         # Condición 2: MACD cruza por encima de la línea de señal
         macd_crossover = (df['macd'].iloc[current_idx-1] <= df['macd_signal'].iloc[current_idx-1] and
-                          df['macd'].iloc[current_idx] > df['macd_signal'].iloc[current_idx])
+                        df['macd'].iloc[current_idx] > df['macd_signal'].iloc[current_idx])
+        condition2 = macd_crossover
         
-        return (cross_lower_bb and rsi_oversold) or macd_crossover
+        # Valores actuales para logging
+        current_price = df['close'].iloc[current_idx]
+        prev_price = df['close'].iloc[current_idx-1]
+        current_bb_lower = df['bb_lower'].iloc[current_idx]
+        prev_bb_lower = df['bb_lower'].iloc[current_idx-1]
+        current_rsi = df['rsi'].iloc[current_idx]
+        current_macd = df['macd'].iloc[current_idx]
+        current_macd_signal = df['macd_signal'].iloc[current_idx]
+        prev_macd = df['macd'].iloc[current_idx-1]
+        prev_macd_signal = df['macd_signal'].iloc[current_idx-1]
+        
+        # Detalles de cada condición para los logs
+        logger.debug(f"Análisis de señal de COMPRA:")
+        logger.debug(f"Precio actual: {current_price}, Precio anterior: {prev_price}")
+        logger.debug(f"BB inferior actual: {current_bb_lower}, BB inferior anterior: {prev_bb_lower}")
+        logger.debug(f"Cruz de BB inferior: {cross_lower_bb} = (Precio anterior {prev_price} <= BB inferior anterior {prev_bb_lower}) "
+                f"AND (Precio actual {current_price} > BB inferior actual {current_bb_lower})")
+        logger.debug(f"RSI: {current_rsi}, RSI sobreventa: {rsi_oversold} = (RSI {current_rsi} < 30)")
+        logger.debug(f"MACD actual: {current_macd}, MACD anterior: {prev_macd}")
+        logger.debug(f"Señal MACD actual: {current_macd_signal}, Señal MACD anterior: {prev_macd_signal}")
+        logger.debug(f"Cruz de MACD: {macd_crossover} = (MACD anterior {prev_macd} <= Señal MACD anterior {prev_macd_signal}) "
+                f"AND (MACD actual {current_macd} > Señal MACD actual {current_macd_signal})")
+        
+        # Resultado final
+        result = condition1 or condition2
+        logger.debug(f"Resultado final señal de COMPRA: {result} = (Condición BB+RSI: {condition1}) OR (Condición MACD: {condition2})")
+        
+        return result
     
     @staticmethod
     def check_sell_signal(df, current_idx):
@@ -934,77 +965,220 @@ class BinanceTradingBot:
             logger.error(f"Error al cerrar posición: {e}")
     
     def check_position_status(self):
-        """Verifica el estado de la posición actual y actualiza si es necesario."""
+        """Verifica el estado de la posición actual y actualiza si es necesario"""
         if not self.in_position:
+            logger.info("No hay posición abierta actualmente, buscando señales...")
             return
         
         try:
-            # Obtener el precio actual
-            ticker = self.client.get_symbol_ticker(symbol=self.symbol)
-            current_price = float(ticker['price'])
+            # Obtener información actualizada de la posición
+            position_info = self.get_position_info()
             
-            # Comprobar si se ha alcanzado SL o TP
-            if self.position_side == 'LONG':
-                if current_price <= self.stop_loss:
-                    logger.info(f"Stop Loss alcanzado: {current_price} <= {self.stop_loss}")
-                    self.close_position()
-                    self.tracker.end_trade(current_price, reason="STOP_LOSS")
-                elif current_price >= self.take_profit:
-                    logger.info(f"Take Profit alcanzado: {current_price} >= {self.take_profit}")
-                    self.close_position()
-                    self.tracker.end_trade(current_price, reason="TAKE_PROFIT")
-            elif self.position_side == 'SHORT':
-                if current_price >= self.stop_loss:
-                    logger.info(f"Stop Loss alcanzado (SHORT): {current_price} >= {self.stop_loss}")
-                    self.close_position()
-                    self.tracker.end_trade(current_price, reason="STOP_LOSS")
-                elif current_price <= self.take_profit:
-                    logger.info(f"Take Profit alcanzado (SHORT): {current_price} <= {self.take_profit}")
-                    self.close_position()
-                    self.tracker.end_trade(current_price, reason="TAKE_PROFIT")
+            # Verificar si aún tenemos una posición abierta
+            has_position = False
             
-            # Calcular P&L actual
-            if self.position_side == 'LONG':
-                profit_loss = ((current_price - self.entry_price) / self.entry_price) * 100
-            else:  # 'SHORT'
-                profit_loss = ((self.entry_price - current_price) / self.entry_price) * 100
+            if self.params['HEDGE_MODE']:
+                if self.position_side == 'LONG' and position_info['LONG']:
+                    pos_amount = float(position_info['LONG']['positionAmt'])
+                    has_position = pos_amount > 0
+                    if has_position:
+                        current_price = float(position_info['LONG']['markPrice'])
+                        unrealized_pnl = float(position_info['LONG']['unrealizedProfit'])
+                        
+                elif self.position_side == 'SHORT' and position_info['SHORT']:
+                    pos_amount = float(position_info['SHORT']['positionAmt'])
+                    has_position = pos_amount < 0  # Negativo para SHORT
+                    if has_position:
+                        current_price = float(position_info['SHORT']['markPrice'])
+                        unrealized_pnl = float(position_info['SHORT']['unrealizedProfit'])
+            else:
+                # En modo one-way
+                if position_info['LONG']:
+                    has_position = float(position_info['LONG']['positionAmt']) > 0
+                    if has_position:
+                        current_price = float(position_info['LONG']['markPrice'])
+                        unrealized_pnl = float(position_info['LONG']['unrealizedProfit'])
+                        
+                elif position_info['SHORT']:
+                    has_position = float(position_info['SHORT']['positionAmt']) < 0
+                    if has_position:
+                        current_price = float(position_info['SHORT']['markPrice'])
+                        unrealized_pnl = float(position_info['SHORT']['unrealizedProfit'])
             
-            logger.info(f"Estado de posición: {self.position_side}, Entrada: {self.entry_price}, "
-                      f"Actual: {current_price}, P&L: {profit_loss:.2f}%")
+            # Si ya no tenemos posición pero el bot cree que sí, actualizar el estado
+            if not has_position:
+                # La posición fue cerrada (probablemente por SL/TP)
+                if self.tracker.current_trade:
+                    # Obtener precio actual
+                    price_info = self.futures_client.futures_mark_price(symbol=self.symbol)
+                    exit_price = float(price_info['markPrice'])
+                    
+                    # Determinar razón probable de salida
+                    reason = "UNKNOWN"
+                    if self.entry_price > 0:
+                        if self.position_side in ['LONG', 'BOTH'] and exit_price <= self.entry_price * (1 - self.params['STOP_LOSS_PERCENT'] / 100):
+                            reason = "STOP_LOSS"
+                        elif self.position_side in ['LONG', 'BOTH'] and exit_price >= self.entry_price * (1 + self.params['TAKE_PROFIT_PERCENT'] / 100):
+                            reason = "TAKE_PROFIT"
+                        elif self.position_side == 'SHORT' and exit_price >= self.entry_price * (1 + self.params['STOP_LOSS_PERCENT'] / 100):
+                            reason = "STOP_LOSS"
+                        elif self.position_side == 'SHORT' and exit_price <= self.entry_price * (1 - self.params['TAKE_PROFIT_PERCENT'] / 100):
+                            reason = "TAKE_PROFIT"
+                    
+                    logger.info(f"Posición cerrada detectada. Razón: {reason}, Precio de salida: {exit_price}")
+                    
+                    # Registrar cierre en el tracker
+                    self.tracker.end_trade(
+                        exit_price=exit_price,
+                        reason=reason
+                    )
+                
+                # Resetear estado del bot
+                self.in_position = False
+                self.position_side = None
+                self.entry_price = 0
+                self.position_amount = 0
+                self.stop_loss_order_id = None
+                self.take_profit_order_id = None
+                
+                logger.info("Posición cerrada detectada. Estado del bot actualizado.")
+                return
+            
+            # Si tenemos posición activa, mostrar P&L actual
+            if has_position:
+                # Calcular P&L porcentual
+                if self.position_side in ['LONG', 'BOTH'] and self.entry_price > 0:
+                    pnl_percent = ((current_price - self.entry_price) / self.entry_price) * 100
+                elif self.position_side == 'SHORT' and self.entry_price > 0:
+                    pnl_percent = ((self.entry_price - current_price) / self.entry_price) * 100
+                else:
+                    pnl_percent = 0
+                
+                logger.info(f"Estado de posición {self.position_side}: Entrada: {self.entry_price}, "
+                        f"Actual: {current_price}, P&L: {pnl_percent:.2f}% ({unrealized_pnl})")
+                
+                # Verificar límites de SL y TP
+                if self.position_side in ['LONG', 'BOTH']:
+                    stop_loss_price = self.entry_price * (1 - self.params['STOP_LOSS_PERCENT'] / 100)
+                    take_profit_price = self.entry_price * (1 + self.params['TAKE_PROFIT_PERCENT'] / 100)
+                    logger.info(f"Límites: Stop Loss: {stop_loss_price:.2f}, Take Profit: {take_profit_price:.2f}")
+                    
+                    if current_price <= stop_loss_price:
+                        logger.info(f"Precio actual {current_price} ha alcanzado el nivel de Stop Loss {stop_loss_price}")
+                    elif current_price >= take_profit_price:
+                        logger.info(f"Precio actual {current_price} ha alcanzado el nivel de Take Profit {take_profit_price}")
+                elif self.position_side == 'SHORT':
+                    stop_loss_price = self.entry_price * (1 + self.params['STOP_LOSS_PERCENT'] / 100)
+                    take_profit_price = self.entry_price * (1 - self.params['TAKE_PROFIT_PERCENT'] / 100)
+                    logger.info(f"Límites: Stop Loss: {stop_loss_price:.2f}, Take Profit: {take_profit_price:.2f}")
+                    
+                    if current_price >= stop_loss_price:
+                        logger.info(f"Precio actual {current_price} ha alcanzado el nivel de Stop Loss {stop_loss_price}")
+                    elif current_price <= take_profit_price:
+                        logger.info(f"Precio actual {current_price} ha alcanzado el nivel de Take Profit {take_profit_price}")
+                
+                # Verificar órdenes de SL/TP
+                if not self.stop_loss_order_id or not self.take_profit_order_id:
+                    # Alguna orden fue ejecutada o cancelada, verificar cuál
+                    orders = self.futures_client.futures_get_open_orders(symbol=self.symbol)
+                    
+                    has_sl = any(order.get('orderId') == self.stop_loss_order_id for order in orders)
+                    has_tp = any(order.get('orderId') == self.take_profit_order_id for order in orders)
+                    
+                    logger.info(f"Estado de órdenes: Stop Loss activo: {has_sl}, Take Profit activo: {has_tp}")
+                    
+                    if not has_sl and not has_tp:
+                        # Ambas órdenes han desaparecido, verificar si necesitamos recolocarlas
+                        logger.info("Ambas órdenes SL/TP no están activas. Recolocando...")
+                        self.place_stop_loss_take_profit()
+                    
+                    elif not has_sl and self.stop_loss_order_id:
+                        # Stop loss ejecutado, cerrar posición manualmente
+                        logger.info("Stop Loss ejecutado. Cerrando posición manualmente si es necesario.")
+                        self.close_position()
+                    
+                    elif not has_tp and self.take_profit_order_id:
+                        # Take profit ejecutado, cerrar posición manualmente
+                        logger.info("Take Profit ejecutado. Cerrando posición manualmente si es necesario.")
+                        self.close_position()
             
         except Exception as e:
             logger.error(f"Error al verificar estado de posición: {e}")
     
     def run_strategy(self):
-        """Ejecuta la estrategia de trading en un bucle continuo."""
-        logger.info("Iniciando estrategia de trading...")
+        """Ejecuta la estrategia de trading en un bucle continuo"""
+        logger.info("Iniciando estrategia de trading de futuros...")
         
         while True:
             try:
                 # Obtener datos históricos
+                logger.info(f"Obteniendo datos históricos para {self.symbol} en intervalo {self.interval}")
                 df = self.get_historical_klines()
                 if df is None or df.empty:
                     logger.warning("No se pudieron obtener datos históricos, reintentando...")
                     time.sleep(60)
                     continue
                 
+                logger.info(f"Datos obtenidos: {len(df)} velas. Última vela: {df.index[-1]}")
+                
                 # Calcular indicadores
+                logger.info("Calculando indicadores técnicos...")
                 df = IndicatorCalculator.calculate_all_indicators(df, self.params)
                 
+                # Mostrar valores de indicadores clave para la última vela
+                last_idx = -1
+                logger.info(f"Indicadores actuales - RSI: {df['rsi'].iloc[last_idx]:.2f}, "
+                        f"BB Superior: {df['bb_upper'].iloc[last_idx]:.2f}, "
+                        f"BB Inferior: {df['bb_lower'].iloc[last_idx]:.2f}, "
+                        f"MACD: {df['macd'].iloc[last_idx]:.6f}, "
+                        f"Señal MACD: {df['macd_signal'].iloc[last_idx]:.6f}, "
+                        f"Histograma MACD: {df['macd_histogram'].iloc[last_idx]:.6f}")
+                
                 # Verificar si hay posiciones abiertas
+                logger.info("Verificando estado de posiciones abiertas...")
                 self.check_position_status()
                 
-                # Verificar si hay órdenes abiertas
-                has_open_orders = self.check_open_orders()
-                
                 # Si no hay posición abierta, buscar señales de entrada
-                if not self.in_position and not has_open_orders:
+                if not self.in_position:
+                    logger.info("No hay posición abierta. Buscando señales de entrada...")
+                    
                     # Verificar señales en los datos más recientes
                     buy_signal = SignalGenerator.check_buy_signal(df, -1)
                     sell_signal = SignalGenerator.check_sell_signal(df, -1)
                     
+                    # Análisis detallado de condiciones
+                    price = df['close'].iloc[-1]
+                    prev_price = df['close'].iloc[-2] if len(df) > 1 else 0
+                    bb_upper = df['bb_upper'].iloc[-1]
+                    bb_lower = df['bb_lower'].iloc[-1]
+                    prev_bb_upper = df['bb_upper'].iloc[-2] if len(df) > 1 else 0
+                    prev_bb_lower = df['bb_lower'].iloc[-2] if len(df) > 1 else 0
+                    rsi = df['rsi'].iloc[-1]
+                    macd = df['macd'].iloc[-1]
+                    macd_signal = df['macd_signal'].iloc[-1]
+                    prev_macd = df['macd'].iloc[-2] if len(df) > 1 else 0
+                    prev_macd_signal = df['macd_signal'].iloc[-2] if len(df) > 1 else 0
+                    
+                    # Comprobar condiciones específicas
+                    cross_lower_bb = (prev_price <= prev_bb_lower and price > bb_lower) if len(df) > 1 else False
+                    rsi_oversold = rsi < 30
+                    macd_crossover = (prev_macd <= prev_macd_signal and macd > macd_signal) if len(df) > 1 else False
+                    
+                    cross_upper_bb = (prev_price <= prev_bb_upper and price > bb_upper) if len(df) > 1 else False
+                    rsi_overbought = rsi > 70
+                    macd_crossunder = (prev_macd >= prev_macd_signal and macd < macd_signal) if len(df) > 1 else False
+                    
+                    logger.info("Análisis de condiciones para señales:")
+                    logger.info(f"Precio actual: {price:.2f}, Precio anterior: {prev_price:.2f}")
+                    logger.info(f"BB Superior: {bb_upper:.2f}, BB Inferior: {bb_lower:.2f}")
+                    logger.info(f"RSI: {rsi:.2f} (Sobrecompra >70, Sobreventa <30)")
+                    logger.info(f"MACD: {macd:.6f}, Señal MACD: {macd_signal:.6f}, Diferencia: {macd - macd_signal:.6f}")
+                    logger.info(f"Condiciones COMPRA - Cruz BB inferior: {cross_lower_bb}, RSI sobreventa: {rsi_oversold}, Cruz MACD alcista: {macd_crossover}")
+                    logger.info(f"Condiciones VENTA - Cruz BB superior: {cross_upper_bb}, RSI sobrecompra: {rsi_overbought}, Cruz MACD bajista: {macd_crossunder}")
+                    logger.info(f"Resultado señales - Compra: {buy_signal}, Venta: {sell_signal}")
+                    
                     if buy_signal:
-                        logger.info("¡Señal de compra detectada!")
+                        logger.info("¡SEÑAL DE COMPRA DETECTADA!")
                         
                         # Calcular factor de riesgo dinámico basado en ATR
                         atr_value = df['atr'].iloc[-1]
@@ -1014,10 +1188,12 @@ class BinanceTradingBot:
                         # Ajustar tamaño de posición inversamente proporcional a la volatilidad
                         risk_factor = min(1.0, 0.02 / volatility) if volatility > 0 else 1.0
                         
-                        self.place_buy_order(risk_factor)
+                        logger.info(f"Factores de riesgo - ATR: {atr_value:.2f}, Volatilidad: {volatility:.4f}, Factor de riesgo: {risk_factor:.2f}")
                         
-                    elif sell_signal and self.params.get('ENABLE_SHORT', False):
-                        logger.info("¡Señal de venta en corto detectada!")
+                        self.place_long_position(risk_factor)
+                        
+                    elif sell_signal:
+                        logger.info("¡SEÑAL DE VENTA EN CORTO DETECTADA!")
                         
                         # Gestión de riesgo dinámica similar
                         atr_value = df['atr'].iloc[-1]
@@ -1025,25 +1201,52 @@ class BinanceTradingBot:
                         volatility = atr_value / current_price
                         risk_factor = min(1.0, 0.02 / volatility) if volatility > 0 else 1.0
                         
-                        self.place_sell_short_order(risk_factor)
+                        logger.info(f"Factores de riesgo - ATR: {atr_value:.2f}, Volatilidad: {volatility:.4f}, Factor de riesgo: {risk_factor:.2f}")
+                        
+                        self.place_short_position(risk_factor)
                 
-                # Mostrar estado actual
-                current_price = float(self.client.get_symbol_ticker(symbol=self.symbol)['price'])
-                logger.info(f"Precio actual: {current_price}, En posición: {self.in_position}, Tipo: {self.position_side}")
+                # Mostrar información relevante del mercado
+                price_info = self.futures_client.futures_mark_price(symbol=self.symbol)
+                current_price = float(price_info['markPrice'])
                 
-                if self.in_position:
-                    if self.position_side == 'LONG':
-                        profit_loss = ((current_price - self.entry_price) / self.entry_price) * 100
-                    else:  # 'SHORT'
-                        profit_loss = ((self.entry_price - current_price) / self.entry_price) * 100
-                    logger.info(f"P&L actual: {profit_loss:.2f}%")
-
+                # Obtener información del libro de órdenes para análisis de liquidez
+                order_book = self.futures_client.futures_order_book(symbol=self.symbol, limit=5)
+                
+                # Calcular el ratio bid/ask (soporte/resistencia inmediata)
+                bid_volume = sum(float(bid[1]) for bid in order_book['bids'])
+                ask_volume = sum(float(ask[1]) for ask in order_book['asks'])
+                bid_ask_ratio = bid_volume / ask_volume if ask_volume > 0 else 0
+                
+                logger.info(f"Información de mercado - Precio actual: {current_price}, Ratio compra/venta: {bid_ask_ratio:.2f}, "
+                        f"En posición: {self.in_position}, Tipo: {self.position_side}")
+                
+                # Mostrar información de financiamiento (específico de futuros)
+                try:
+                    funding_info = self.futures_client.futures_funding_rate(symbol=self.symbol)
+                    if funding_info:
+                        funding_rate = float(funding_info[0].get('fundingRate', 0)) * 100  # Convertir a porcentaje
+                        next_funding_time = datetime.fromtimestamp(funding_info[0].get('nextFundingTime', 0) / 1000)
+                        logger.info(f"Información de financiamiento - Tasa actual: {funding_rate:.4f}%, "
+                                f"Próximo financiamiento: {next_funding_time}")
+                except Exception as e:
+                    logger.error(f"Error al obtener información de financiamiento: {e}")
+                
                 # Esperar para la próxima iteración
+                logger.info(f"Ciclo de análisis completado. Esperando 30 segundos para el próximo ciclo...")
                 time.sleep(30)
-
+                
+            except KeyboardInterrupt:
+                logger.info("Interrupción manual detectada, finalizando...")
+                break
+                
             except Exception as e:
                 logger.error(f"Error en el ciclo principal: {e}")
+                logger.error(f"Traceback: {traceback.format_exc()}")
+                logger.info("Esperando 60 segundos antes de reintentar...")
                 time.sleep(60)
+        
+        # Cierre controlado
+        self._cleanup()
 
     def run_backtest(self, start_date, end_date=None, initial_capital=1000):
         """Ejecuta un backtest de la estrategia."""
