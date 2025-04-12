@@ -1,0 +1,7 @@
+.env
+env/
+bot.log
+crypto_bot.log
+logs/
+data/
+backups/

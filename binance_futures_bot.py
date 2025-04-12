@@ -16,47 +16,62 @@ logger = logging.getLogger("binance_futures_bot")
 
 class BinanceFuturesBot:
     """Clase para trading de futuros en Binance"""
-    
+
     def __init__(self, symbol="ETHUSDT", interval=Client.KLINE_INTERVAL_1HOUR, params=None, testnet=True):
         """Inicializa el bot de futuros"""
         self.symbol = symbol
         self.interval = interval
         self.testnet = testnet
-        
+
         # Cargar API keys
         load_dotenv()
         self.api_key = os.environ.get('BINANCE_API_KEY')
         self.api_secret = os.environ.get('BINANCE_API_SECRET')
-        
+
         if not self.api_key or not self.api_secret:
             raise ValueError("Las claves API no están configuradas en el archivo .env")
-        
-        # Parámetros por defecto
+
+        # Mantener el intervalo de 5 minutos
+        self.interval = "5m"
+
+        # Parámetros con mayor sensibilidad para generar más de 2 señales diarias
         self.params = {
-            'LENGTH_BB': 30,
-            'MULT_BB': 2.0,
-            'LENGTH_SMA': 50,
-            'LENGTH_EMA': 50,
-            'LENGTH_RSI': 14,
-            'LENGTH_MACD_SHORT': 12,
-            'LENGTH_MACD_LONG': 26,
-            'LENGTH_MACD_SIGNAL': 9,
-            'STOP_LOSS_PERCENT': 2,
-            'TAKE_PROFIT_PERCENT': 4,
-            'LOOKBACK_PERIOD': 200,
-            'EQUITY_PERCENTAGE': 5,  # Menor que en spot debido al apalancamiento
-            'LEVERAGE': 3,  # Apalancamiento por defecto (3x)
-            'ENABLE_SHORT': True,  # Habilitado por defecto en futuros
-            'HEDGE_MODE': False,  # Modo de cobertura (permite posiciones largas y cortas simultáneas)
-            'TRAILING_STOP': False,  # Activar stop loss dinámico
-            'TRAILING_STOP_CALLBACK': 1.0,  # Porcentaje de callback para trailing stop
-            'REDUCE_ONLY': False  # Si es True, las órdenes solo pueden reducir posiciones existentes
+            # Bandas de Bollinger mucho más sensibles
+            'LENGTH_BB': 15,           # Reducido aún más para mayor sensibilidad
+            'MULT_BB': 1.5,            # Bandas más estrechas para más señales
+
+            # Medias móviles más cortas para mejor respuesta
+            'LENGTH_SMA': 35,          # Reducido para responder más rápido
+            'LENGTH_EMA': 35,          # Reducido para responder más rápido
+
+            # RSI con umbrales más amplios
+            'LENGTH_RSI': 10,          # RSI más corto para mayor sensibilidad
+            'RSI_OVERSOLD': 40,        # Umbral más alto para más señales de compra
+            'RSI_OVERBOUGHT': 60,      # Umbral más bajo para más señales de venta
+
+            # MACD ultra sensible
+            'LENGTH_MACD_SHORT': 8,    # Muy sensible a cambios recientes
+            'LENGTH_MACD_LONG': 17,    # Reducido para comparar con tendencias más cortas
+            'LENGTH_MACD_SIGNAL': 5,   # Señal muy rápida
+
+            # Gestión de riesgo para operaciones más frecuentes
+            'STOP_LOSS_PERCENT': 1.2,  # Ajustado para operaciones más frecuentes
+            'TAKE_PROFIT_PERCENT': 2.5, # Objetivos más pequeños pero más frecuentes
+
+            # Configuración de operaciones
+            'ENABLE_SHORT': True,      # Habilitar operaciones cortas
+            'LEVERAGE': 5,             # Apalancamiento moderado
+            'HEDGE_MODE': False,       # Sin hedge mode para simplicidad
+            'EQUITY_PERCENTAGE': 8,    # Ligeramente reducido para distribuir el riesgo
+
+            'RSI_OVERSOLD': 45,      # Añadir explícitamente 
+            'RSI_OVERBOUGHT': 55,    # Añadir explícitamente
         }
-        
+
         # Sobrescribir con parámetros personalizados si se proporcionan
         if params:
             self.params.update(params)
-        
+
         # Inicializar cliente de Binance para futuros
         if self.testnet:
             self.client = Client(self.api_key, self.api_secret, testnet=True)

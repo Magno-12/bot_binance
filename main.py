@@ -297,7 +297,7 @@ class RobustTradingBot:
                 
                 self.logger.info(f"Análisis detallado de señales:")
                 self.logger.info(f"Precio: {price:.2f}, BB Upper: {bb_upper:.2f}, BB Lower: {bb_lower:.2f}")
-                self.logger.info(f"RSI: {rsi:.2f} (Sobrecompra >70, Sobreventa <30)")
+                self.logger.info(f"RSI: {rsi:.2f} (Sobrecompra >55, Sobreventa <45)")
                 self.logger.info(f"MACD: {macd:.6f}, Señal MACD: {macd_signal:.6f}, Dif: {macd - macd_signal:.6f}")
                 
                 # Verificar los cruces específicos de las condiciones
@@ -316,11 +316,11 @@ class RobustTradingBot:
                     prev_macd_signal = df['macd_signal'].iloc[-2]
                     
                     cross_lower_bb = (prev_price <= prev_bb_lower and price > bb_lower)
-                    rsi_oversold = rsi < 30
+                    rsi_oversold = rsi < 45
                     macd_crossover = (prev_macd <= prev_macd_signal and macd > macd_signal)
                     
                     cross_upper_bb = (prev_price <= prev_bb_upper and price > bb_upper)
-                    rsi_overbought = rsi > 70
+                    rsi_overbought = rsi > 55
                     macd_crossunder = (prev_macd >= prev_macd_signal and macd < macd_signal)
                     
                     self.logger.info(f"Cruz BB inferior: {cross_lower_bb}, RSI sobreventa: {rsi_oversold}")

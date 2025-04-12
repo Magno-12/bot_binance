@@ -121,21 +121,28 @@ class SignalGenerator:
     
     @staticmethod
     def check_buy_signal(df, current_idx):
-        """Verifica las condiciones de compra (posición larga)"""
+        """Verifica las condiciones de compra (posición larga) con sensibilidad extrema"""
         if current_idx < 1 or current_idx >= len(df):
             logger.debug(f"Índice fuera de rango para check_buy_signal: {current_idx}")
             return False
         
-        # Condición 1: Precio cruza por encima de la banda inferior de Bollinger y RSI < 30
+        # Condición 1: Precio incluso más cerca de la banda inferior o RSI más permisivo
         cross_lower_bb = (df['close'].iloc[current_idx-1] <= df['bb_lower'].iloc[current_idx-1] and
                         df['close'].iloc[current_idx] > df['bb_lower'].iloc[current_idx])
-        rsi_oversold = df['rsi'].iloc[current_idx] < 30
-        condition1 = cross_lower_bb and rsi_oversold
+        near_lower_bb = (df['close'].iloc[current_idx] <= df['bb_lower'].iloc[current_idx] * 1.05)  # 5% de margen
+        rsi_oversold = df['rsi'].iloc[current_idx] < 45  # Umbral aumentado de 30 a 45
+        condition1 = (cross_lower_bb or near_lower_bb) or rsi_oversold  # Cambiado AND por OR para más señales
         
-        # Condición 2: MACD cruza por encima de la línea de señal
+        # Condición 2: MACD cerca de cruzar con mayor margen
         macd_crossover = (df['macd'].iloc[current_idx-1] <= df['macd_signal'].iloc[current_idx-1] and
                         df['macd'].iloc[current_idx] > df['macd_signal'].iloc[current_idx])
-        condition2 = macd_crossover
+        macd_near_signal = abs(df['macd'].iloc[current_idx] - df['macd_signal'].iloc[current_idx]) < 1.5  # Margen más amplio
+        condition2 = macd_crossover or macd_near_signal
+        
+        # Condición 3: RSI en tendencia ascendente o precio subiendo
+        rsi_ascending = df['rsi'].iloc[current_idx] > df['rsi'].iloc[current_idx-1]
+        price_ascending = df['close'].iloc[current_idx] > df['close'].iloc[current_idx-3]  # Precio subiendo en últimas 3 velas
+        condition3 = rsi_ascending or price_ascending
         
         # Valores actuales para logging
         current_price = df['close'].iloc[current_idx]
@@ -154,35 +161,72 @@ class SignalGenerator:
         logger.debug(f"BB inferior actual: {current_bb_lower}, BB inferior anterior: {prev_bb_lower}")
         logger.debug(f"Cruz de BB inferior: {cross_lower_bb} = (Precio anterior {prev_price} <= BB inferior anterior {prev_bb_lower}) "
                 f"AND (Precio actual {current_price} > BB inferior actual {current_bb_lower})")
-        logger.debug(f"RSI: {current_rsi}, RSI sobreventa: {rsi_oversold} = (RSI {current_rsi} < 30)")
+        logger.debug(f"Cerca de BB inferior: {near_lower_bb} = (Precio actual {current_price} <= BB inferior * 1.05 {current_bb_lower * 1.05})")
+        logger.debug(f"RSI: {current_rsi}, RSI sobreventa: {rsi_oversold} = (RSI {current_rsi} < 45)")
         logger.debug(f"MACD actual: {current_macd}, MACD anterior: {prev_macd}")
         logger.debug(f"Señal MACD actual: {current_macd_signal}, Señal MACD anterior: {prev_macd_signal}")
         logger.debug(f"Cruz de MACD: {macd_crossover} = (MACD anterior {prev_macd} <= Señal MACD anterior {prev_macd_signal}) "
                 f"AND (MACD actual {current_macd} > Señal MACD actual {current_macd_signal})")
+        logger.debug(f"MACD cerca de señal: {macd_near_signal} = (Distancia {abs(current_macd - current_macd_signal)} < 1.5)")
+        logger.debug(f"RSI ascendente: {rsi_ascending}, Precio ascendente: {price_ascending}")
         
-        # Resultado final
-        result = condition1 or condition2
-        logger.debug(f"Resultado final señal de COMPRA: {result} = (Condición BB+RSI: {condition1}) OR (Condición MACD: {condition2})")
+        # Resultado final con condiciones aún más permisivas
+        result = condition1 or condition2 or condition3
+        logger.debug(f"Resultado final señal de COMPRA: {result} = (Condición BB+RSI: {condition1}) OR "
+                    f"(Condición MACD: {condition2}) OR (Tendencia: {condition3})")
         
         return result
     
     @staticmethod
     def check_sell_signal(df, current_idx):
-        """Verifica las condiciones de venta (cierre de posición larga o apertura de corta)"""
+        """Verifica las condiciones de venta con sensibilidad extrema"""
         if current_idx < 1 or current_idx >= len(df):
+            logger.debug(f"Índice fuera de rango para check_sell_signal: {current_idx}")
             return False
         
-        # Condición 1: Precio cruza por encima de la banda superior de Bollinger y RSI > 70
+        # Condición 1: Precio incluso más cerca de la banda superior o RSI más permisivo
         cross_upper_bb = (df['close'].iloc[current_idx-1] <= df['bb_upper'].iloc[current_idx-1] and
                           df['close'].iloc[current_idx] > df['bb_upper'].iloc[current_idx])
-        rsi_overbought = df['rsi'].iloc[current_idx] > 70
+        near_upper_bb = (df['close'].iloc[current_idx] >= df['bb_upper'].iloc[current_idx] * 0.95)  # 5% de margen
+        rsi_overbought = df['rsi'].iloc[current_idx] > 55  # Umbral reducido de 70 a 55
+        condition1 = (cross_upper_bb or near_upper_bb) or rsi_overbought  # Cambiado AND por OR para más señales
         
-        # Condición 2: MACD cruza por debajo de la línea de señal
+        # Condición 2: MACD cerca de cruzar con mayor margen
         macd_crossunder = (df['macd'].iloc[current_idx-1] >= df['macd_signal'].iloc[current_idx-1] and
                            df['macd'].iloc[current_idx] < df['macd_signal'].iloc[current_idx])
+        macd_near_signal = abs(df['macd'].iloc[current_idx] - df['macd_signal'].iloc[current_idx]) < 1.5  # Margen más amplio
+        condition2 = macd_crossunder or macd_near_signal
         
-        return (cross_upper_bb and rsi_overbought) or macd_crossunder
-
+        # Condición 3: RSI en tendencia descendente o precio bajando
+        rsi_descending = df['rsi'].iloc[current_idx] < df['rsi'].iloc[current_idx-1]
+        price_descending = df['close'].iloc[current_idx] < df['close'].iloc[current_idx-3]  # Precio bajando en últimas 3 velas
+        condition3 = rsi_descending or price_descending
+        
+        # Valores para logging
+        current_price = df['close'].iloc[current_idx]
+        prev_price = df['close'].iloc[current_idx-1]
+        current_bb_upper = df['bb_upper'].iloc[current_idx]
+        prev_bb_upper = df['bb_upper'].iloc[current_idx-1]
+        current_rsi = df['rsi'].iloc[current_idx]
+        current_macd = df['macd'].iloc[current_idx]
+        current_macd_signal = df['macd_signal'].iloc[current_idx]
+        
+        # Detalles para logs
+        logger.debug(f"Análisis de señal de VENTA:")
+        logger.debug(f"Precio actual: {current_price}, Precio anterior: {prev_price}")
+        logger.debug(f"BB superior actual: {current_bb_upper}, BB superior anterior: {prev_bb_upper}")
+        logger.debug(f"Cruz de BB superior: {cross_upper_bb} = (Precio anterior {prev_price} <= BB superior anterior {prev_bb_upper}) "
+                    f"AND (Precio actual {current_price} > BB superior actual {current_bb_upper})")
+        logger.debug(f"Cerca de BB superior: {near_upper_bb} = (Precio actual {current_price} >= BB superior * 0.95 {current_bb_upper * 0.95})")
+        logger.debug(f"RSI: {current_rsi}, RSI sobrecompra: {rsi_overbought} = (RSI {current_rsi} > 55)")
+        logger.debug(f"RSI descendente: {rsi_descending}, Precio descendente: {price_descending}")
+        
+        # Resultado final con condiciones aún más permisivas
+        result = condition1 or condition2 or condition3
+        logger.debug(f"Resultado final señal de VENTA: {result} = (Condición BB+RSI: {condition1}) OR "
+                    f"(Condición MACD: {condition2}) OR (Tendencia: {condition3})")
+        
+        return result
 
 class PerformanceTracker:
     """Clase para realizar seguimiento del rendimiento del bot"""
