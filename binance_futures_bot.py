@@ -14,6 +14,49 @@ from binance_bot import IndicatorCalculator, SignalGenerator, PerformanceTracker
 # Configuración de logging
 logger = logging.getLogger("binance_futures_bot")
 
+class TradeGuaranteeManager:
+    """Administra la garantía de operaciones mínimas diarias"""
+    
+    def __init__(self, min_daily_trades=3):
+        self.min_daily_trades = min_daily_trades
+        self.daily_trades = []
+        self.last_reset_date = datetime.now().date()
+        self.forced_trade_threshold = 0.75
+        
+    def reset_daily_count(self):
+        """Resetea el contador diario"""
+        current_date = datetime.now().date()
+        if current_date != self.last_reset_date:
+            self.daily_trades = []
+            self.last_reset_date = current_date
+            return True
+        return False
+    
+    def register_trade(self, trade_type):
+        """Registra una nueva operación"""
+        self.daily_trades.append({
+            'timestamp': datetime.now(),
+            'type': trade_type,
+            'was_forced': False
+        })
+    
+    def needs_forced_trades(self):
+        """Determina si necesitamos forzar operaciones"""
+        self.reset_daily_count()
+        
+        current_hour = datetime.now().hour
+        day_progress = current_hour / 24.0
+        
+        if day_progress >= self.forced_trade_threshold:
+            needed_trades = self.min_daily_trades - len(self.daily_trades)
+            return max(0, needed_trades)
+        return 0
+    
+    def get_daily_trades_count(self):
+        """Obtiene el conteo de operaciones del día"""
+        self.reset_daily_count()
+        return len(self.daily_trades)
+
 class BinanceFuturesBot:
     """Clase para trading de futuros en Binance"""
 
@@ -37,35 +80,36 @@ class BinanceFuturesBot:
         # Parámetros con mayor sensibilidad para generar más de 2 señales diarias
         self.params = {
             # Bandas de Bollinger mucho más sensibles
-            'LENGTH_BB': 15,           # Reducido aún más para mayor sensibilidad
-            'MULT_BB': 1.5,            # Bandas más estrechas para más señales
+            'LENGTH_BB': 5,            # Reducido a mínimo para máxima sensibilidad
+            'MULT_BB': 1.0,            # Bandas más estrechas para más señales
 
             # Medias móviles más cortas para mejor respuesta
-            'LENGTH_SMA': 35,          # Reducido para responder más rápido
-            'LENGTH_EMA': 35,          # Reducido para responder más rápido
+            'LENGTH_SMA': 10,          # Muy corto para responder a cada movimiento
+            'LENGTH_EMA': 10,          # Reducido para responder más rápido
 
             # RSI con umbrales más amplios
-            'LENGTH_RSI': 10,          # RSI más corto para mayor sensibilidad
-            'RSI_OVERSOLD': 40,        # Umbral más alto para más señales de compra
-            'RSI_OVERBOUGHT': 60,      # Umbral más bajo para más señales de venta
+            'LENGTH_RSI': 5,           # RSI muy corto para oscilaciones rápidas
+            'RSI_OVERSOLD': 50,        # Punto medio, genera señales constantemente
+            'RSI_OVERBOUGHT': 50,      # Umbral más bajo para más señales de venta
 
             # MACD ultra sensible
-            'LENGTH_MACD_SHORT': 8,    # Muy sensible a cambios recientes
-            'LENGTH_MACD_LONG': 17,    # Reducido para comparar con tendencias más cortas
-            'LENGTH_MACD_SIGNAL': 5,   # Señal muy rápida
+            'LENGTH_MACD_SHORT': 3,    # Ultra corto para cruces frecuentes
+            'LENGTH_MACD_LONG': 6,     # Diferencia mínima para cruces constantes
+            'LENGTH_MACD_SIGNAL': 3,   # Señal muy rápida
 
             # Gestión de riesgo para operaciones más frecuentes
-            'STOP_LOSS_PERCENT': 1.2,  # Ajustado para operaciones más frecuentes
-            'TAKE_PROFIT_PERCENT': 2.5, # Objetivos más pequeños pero más frecuentes
+            'STOP_LOSS_PERCENT': 0.5,  # Stop loss muy ajustado
+            'TAKE_PROFIT_PERCENT': 1.0, # Objetivos más pequeños pero más frecuentes
 
             # Configuración de operaciones
-            'ENABLE_SHORT': True,      # Habilitar operaciones cortas
-            'LEVERAGE': 5,             # Apalancamiento moderado
-            'HEDGE_MODE': False,       # Sin hedge mode para simplicidad
-            'EQUITY_PERCENTAGE': 8,    # Ligeramente reducido para distribuir el riesgo
+            'ENABLE_SHORT': True,
+            'LEVERAGE': 5,
+            'HEDGE_MODE': False,
+            'EQUITY_PERCENTAGE': 5,     # Ligeramente reducido para distribuir el riesgo
 
             'RSI_OVERSOLD': 45,      # Añadir explícitamente 
             'RSI_OVERBOUGHT': 55,    # Añadir explícitamente
+            'LOOKBACK_PERIOD': 200,
         }
 
         # Sobrescribir con parámetros personalizados si se proporcionan
@@ -92,6 +136,8 @@ class BinanceFuturesBot:
         
         # Tracker de rendimiento
         self.tracker = PerformanceTracker(data_file='futures_performance_data.json')
+
+        self.trade_guarantee = TradeGuaranteeManager(min_daily_trades=3)
         
         # Configuración inicial
         self._setup_account()
@@ -781,6 +827,13 @@ class BinanceFuturesBot:
                 
                 # Verificar si hay posiciones abiertas
                 self.check_position_status()
+
+                needed_trades = self.trade_guarantee.needs_forced_trades()
+
+                if needed_trades > 0:
+                    logger.info(f"¡ALERTA! Necesitamos {needed_trades} operaciones para cumplir objetivo diario")
+                    self._force_trades(needed_trades)
+                    continue
                 
                 # Si no hay posición abierta, buscar señales de entrada
                 if not self.in_position:
@@ -800,6 +853,8 @@ class BinanceFuturesBot:
                         risk_factor = min(1.0, 0.02 / volatility) if volatility > 0 else 1.0
                         
                         self.place_long_position(risk_factor)
+
+                        self.trade_guarantee.register_trade('LONG')
                         
                     elif sell_signal:
                         logger.info("¡Señal de venta en corto detectada!")
@@ -811,6 +866,8 @@ class BinanceFuturesBot:
                         risk_factor = min(1.0, 0.02 / volatility) if volatility > 0 else 1.0
                         
                         self.place_short_position(risk_factor)
+
+                        self.trade_guarantee.register_trade('SHORT')
                 
                 # Mostrar información relevante
                 price_info = self.futures_client.futures_mark_price(symbol=self.symbol)
@@ -851,6 +908,42 @@ class BinanceFuturesBot:
         
         # Cierre controlado
         self._cleanup()
+
+    def _force_trades(self, count):
+        """Fuerza operaciones para cumplir el objetivo diario de 3 operaciones"""
+        logger.info(f"Iniciando secuencia de {count} operaciones forzadas para cumplir objetivo diario")
+        
+        for i in range(count):
+            try:
+                # Si hay posición abierta, cerrarla primero
+                if self.in_position:
+                    logger.info(f"Cerrando posición actual antes de operación forzada #{i+1}")
+                    self.close_position()
+                    time.sleep(5)  # Esperar que se cierre la posición
+                
+                # Alternar entre long y short para operaciones forzadas
+                trade_type = 'LONG' if i % 2 == 0 else 'SHORT'
+                
+                logger.info(f"¡FORZANDO OPERACIÓN #{i+1} DE {count} - TIPO: {trade_type}!")
+                
+                # Usar factor de riesgo mínimo para operaciones forzadas
+                risk_factor = 0.3  # Factor muy bajo para minimizar riesgo
+                
+                if trade_type == 'LONG':
+                    self.place_long_position(risk_factor)
+                else:
+                    self.place_short_position(risk_factor)
+                
+                # ¡NUEVO! Registrar la operación como forzada
+                if len(self.trade_guarantee.daily_trades) > 0:
+                    self.trade_guarantee.daily_trades[-1]['was_forced'] = True
+                
+                # Esperar un momento entre operaciones forzadas
+                time.sleep(15)  # Dar tiempo para que se procese la operación
+                
+            except Exception as e:
+                logger.error(f"Error en operación forzada #{i+1}: {e}")
+                time.sleep(10)
     
     def _cleanup(self):
         """Realiza limpieza al finalizar la ejecución"""
@@ -864,7 +957,18 @@ class BinanceFuturesBot:
             if self.in_position:
                 self.close_position()
             
+            # ¡NUEVO! Generar reporte final de operaciones del día
+            daily_trades = self.trade_guarantee.daily_trades
+            daily_count = len(daily_trades)
+            
+            if daily_count > 0:
+                logger.info(f"Resumen de operaciones del día: {daily_count} operaciones")
+                for i, trade in enumerate(daily_trades, 1):
+                    forced_status = "FORZADA" if trade.get('was_forced', False) else "NATURAL"
+                    logger.info(f"  Operación #{i}: {trade['type']} - {forced_status}")
+            
             logger.info("Limpieza finalizada correctamente")
+            
         except Exception as e:
             logger.error(f"Error durante la limpieza final: {e}")
     

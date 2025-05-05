@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 import json
 import matplotlib.pyplot as plt
-from datetime import datetime
+from datetime import datetime, timedelta
 import os
 import argparse
 import logging
@@ -14,6 +14,82 @@ logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 )
 logger = logging.getLogger("report_generator")
+
+class DailyTradeReporter:
+    """Genera reportes diarios garantizando mínimo 3 operaciones"""
+    
+    def __init__(self, output_dir='daily_reports'):
+        self.output_dir = output_dir
+        os.makedirs(output_dir, exist_ok=True)
+        
+    def generate_daily_report(self, trades, stats=None):
+        """Genera un reporte diario de operaciones"""
+        current_date = datetime.now()
+        filename = f"{self.output_dir}/daily_trades_{current_date.strftime('%Y-%m-%d')}.txt"
+        
+        with open(filename, 'w') as f:
+            f.write("=" * 60 + "\n")
+            f.write("REPORTE DIARIO DE OPERACIONES\n")
+            f.write("=" * 60 + "\n")
+            f.write(f"Fecha: {current_date.strftime('%Y-%m-%d')}\n")
+            f.write(f"Hora de generación: {current_date.strftime('%H:%M:%S')}\n")
+            f.write(f"Total de operaciones en el día: {len(trades)}\n")
+            f.write(f"Objetivo mínimo diario: 3 operaciones - {'✅ CUMPLIDO' if len(trades) >= 3 else '❌ NO CUMPLIDO'}\n")
+            f.write("-" * 60 + "\n\n")
+            
+            # Detalles de cada operación
+            for i, trade in enumerate(trades, 1):
+                entry_time = trade.get('entry_time', 'N/A')
+                exit_time = trade.get('exit_time', 'N/A')
+                entry_price = trade.get('entry_price', 0)
+                exit_price = trade.get('exit_price', 0)
+                side = trade.get('side', 'N/A')
+                profit_loss = trade.get('profit_loss_percent', 0)
+                reason = trade.get('exit_reason', 'N/A')
+                was_forced = trade.get('was_forced', False)
+                
+                f.write(f"OPERACIÓN #{i}:\n")
+                f.write(f"  Tipo: {side}\n")
+                f.write(f"  Entrada: {entry_time} @ ${entry_price}\n")
+                f.write(f"  Salida: {exit_time} @ ${exit_price}\n")
+                f.write(f"  Resultado: {profit_loss:.2f}%\n")
+                f.write(f"  Razón de salida: {reason}\n")
+                f.write(f"  Estado: {'FORZADA' if was_forced else 'NATURAL'}\n")
+                f.write("-" * 30 + "\n")
+            
+            # Resumen
+            if stats:
+                f.write("\nRESUMEN DIARIO:\n")
+                f.write(f"Total de operaciones ganadoras: {stats.get('winning_trades', 0)}\n")
+                f.write(f"Total de operaciones perdedoras: {stats.get('losing_trades', 0)}\n")
+                f.write(f"Win rate: {stats.get('win_rate', 0):.2f}%\n")
+                f.write(f"Rentabilidad total del día: {stats.get('total_pnl', 0):.2f}%\n")
+                
+                # Desglose de operaciones por tipo
+                forced_trades = len([t for t in trades if t.get('was_forced', False)])
+                natural_trades = len(trades) - forced_trades
+                f.write(f"Operaciones naturales: {natural_trades}\n")
+                f.write(f"Operaciones forzadas: {forced_trades}\n")
+            
+            f.write("\n" + "=" * 60 + "\n")
+        
+        logger.info(f"Reporte diario generado: {filename}")
+        return filename
+    
+    def get_daily_trades_from_tracker(self, tracker):
+        """Obtiene las operaciones del día actual del tracker"""
+        today = datetime.now().date()
+        daily_trades = []
+        
+        for trade in tracker.trades:
+            try:
+                trade_date = datetime.fromisoformat(trade['entry_time']).date()
+                if trade_date == today:
+                    daily_trades.append(trade)
+            except:
+                continue
+        
+        return daily_trades
 
 class PerformanceReportGenerator:
     """Clase para generar informes detallados de rendimiento"""
@@ -468,28 +544,31 @@ class PerformanceReportGenerator:
             logger.error(f"Formato de informe no soportado: {format}")
             return None
 
-
 def main():
     """Función principal para ejecutar el generador de informes desde línea de comandos"""
     parser = argparse.ArgumentParser(description='Generador de informes de rendimiento para el bot de trading')
     parser.add_argument('--data', default='performance_data.json', help='Archivo JSON con datos de rendimiento')
     parser.add_argument('--output', default='reports', help='Directorio de salida para informes')
     parser.add_argument('--format', default='text', choices=['text', 'html'], help='Formato del informe')
+    parser.add_argument('--daily', action='store_true', help='Generar reporte diario específico')
 
     args = parser.parse_args()
 
-    generator = PerformanceReportGenerator(
-        data_file=args.data,
-        output_dir=args.output
-    )
-
-    report_path = generator.generate_report(format=args.format)
-
-    if report_path:
-        print(f"Informe generado exitosamente: {report_path}")
+    if args.daily:
+        reporter = DailyTradeReporter(output_dir=args.output)
+        # Aquí necesitarías cargar las operaciones del día desde el tracker
+        logger.info("Para reporte diario, necesitas implementar la carga desde el tracker")
     else:
-        print("No se pudo generar el informe")
+        generator = PerformanceReportGenerator(
+            data_file=args.data,
+            output_dir=args.output
+        )
+        report_path = generator.generate_report(format=args.format)
 
+        if report_path:
+            print(f"Informe generado exitosamente: {report_path}")
+        else:
+            print("No se pudo generar el informe")
 
 if __name__ == "__main__":
     main()

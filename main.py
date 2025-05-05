@@ -155,6 +155,50 @@ class RobustTradingBot:
             self.logger.error(f"Error al inicializar el bot: {e}")
             self.notifier.notify_error("Error al inicializar el bot", str(e))
             return False
+        
+    def _save_signal_to_file(self, signal_type, data):
+        """Guarda información de la señal detectada en un archivo"""
+        try:
+            # Crear directorio si no existe
+            signal_dir = 'signals'
+            os.makedirs(signal_dir, exist_ok=True)
+            
+            # Nombre del archivo con timestamp
+            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+            filename = f"{signal_dir}/{signal_type}_{self.args.symbol}_{timestamp}.txt"
+            
+            # Información a guardar
+            lines = [
+                f"=== SEÑAL DE {signal_type.upper()} DETECTADA ===",
+                f"Fecha y hora: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}",
+                f"Símbolo: {self.args.symbol}",
+                f"Intervalo: {self.args.interval}",
+                f"Precio actual: {data.get('price', 'N/A')}",
+                "",
+                "INDICADORES TÉCNICOS:",
+                f"RSI: {data.get('rsi', 'N/A'):.2f}",
+                f"MACD: {data.get('macd', 'N/A'):.6f}",
+                f"Señal MACD: {data.get('macd_signal', 'N/A'):.6f}",
+                f"BB Superior: {data.get('bb_upper', 'N/A'):.2f}",
+                f"BB Inferior: {data.get('bb_lower', 'N/A'):.2f}",
+                "",
+                "CONDICIONES ACTIVADAS:",
+            ]
+            
+            # Agregar condiciones específicas
+            for condition_name, condition_value in data.get('conditions', {}).items():
+                lines.append(f"{condition_name}: {condition_value}")
+            
+            # Escribir al archivo
+            with open(filename, 'w') as f:
+                f.write('\n'.join(lines))
+                
+            self.logger.info(f"Información de señal guardada en: {filename}")
+            return filename
+            
+        except Exception as e:
+            self.logger.error(f"Error al guardar información de señal: {e}")
+            return None
     
     def check_api_connectivity(self):
         """Verifica la conectividad con la API de Binance"""
